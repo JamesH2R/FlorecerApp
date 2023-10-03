@@ -1,2 +1,2 @@
 # FlorecerApp
-Proyecto de Github de la app Florecer en FlutterFlow
+Proyecto de Github de la app Florecer 
