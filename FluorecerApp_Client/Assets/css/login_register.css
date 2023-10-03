@@ -1,0 +1,26 @@
+﻿
+.login_titles {
+    color: #82c2d7;
+}
+
+.links:hover {
+    color: #3d3272;
+}
+
+.btn_login {
+    background-color: #3d3272;
+    border: none;
+}
+
+    .btn_login:hover {
+        background-color: #4eaac8;
+        transition: 0.5s all;
+    }
+
+.border_forms {
+    border: 1px solid #82c2d7;
+}
+
+.error_badges {
+    font-size: 1rem !important;
+}

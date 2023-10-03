@@ -1,0 +1,43 @@
+﻿@model FluorecerApp_Client.Entities.LoginEnt
+@{
+    ViewBag.Title = "Ingresar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="my-5 d-flex justify-content-center align-items-center">
+    <div class="col-md-5 p-5 shadow-sm border rounded-3">
+        <h2 class="text-center mb-4 login_titles fs-2">Iniciar Sesión</h2>
+        @using (Html.BeginForm("LoginRequest", "User", FormMethod.Post, new { id = "loginForm" }))
+        {
+            <div class="mb-3">
+                <label for="inputEmail" class="form-label error_badges">Correo electrónico</label>
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control border_forms", id = "inputEmail", @type = "email" })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger fs-6" })
+            </div>
+            <div class="mb-3">
+                <label for="inputPassword" class="form-label">Contraseña</label>
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control border_forms", id = "inputPassword" })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger fs-6" })
+            </div>
+            <div class="mt-3 text-center">
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <p class="text-danger">@TempData["ErrorMessage"]</p>
+                }
+            </div>
+            <p class="small">
+                @Html.ActionLink("¿Olvidaste tu contraseña?", "PasswordRecovery", "User", null, new { @class = "login_titles fw-bold links" })
+            </p>
+            <div class="d-grid">
+                <button class="btn btn-primary btn_login" type="submit">Entrar</button>
+            </div>
+        }
+        <div id="loginMessage" class="mt-3 text-center"></div>
+        <div class="mt-3">
+            <p class="mb-0 text-center">
+                ¿No tienes una cuenta?
+                @Html.ActionLink("Registrate", "Register", "User", null, new { @class = "login_titles fw-bold links" })
+            </p>
+        </div>
+    </div>
+</div>
