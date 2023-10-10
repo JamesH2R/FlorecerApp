@@ -14,6 +14,10 @@ namespace FluorecerApp_Client.Controllers
 {
     public class UserController : Controller
     {
+
+        UsersModel model = new UsersModel();
+
+
         private readonly string apiBaseUrl = "https://localhost:44342/";
 
         [HttpGet]
@@ -49,6 +53,11 @@ namespace FluorecerApp_Client.Controllers
                         // Reads JSON response
                         string responseContent = await response.Content.ReadAsStringAsync();
                         UsersEnt result = JsonConvert.DeserializeObject<UsersEnt>(responseContent);
+                        Session["UserId"] = result.UserId;
+                        Session["Email"] = result.Email;
+                        Session["NameLastName"] = result.LastName;
+                        Session["RoleId"] = result.RoleId;
+                        Session["Token"] = result.Token;
                         Session["RoleName"] = result.RoleName;
                         Session["Name"] = result.Name;
 
@@ -63,23 +72,24 @@ namespace FluorecerApp_Client.Controllers
                         return View("Login", entidad);
                     }
                 }
-            } else
+            }
+            else
             {
                 return View("Login", entidad);
             }
-            
+
         }
 
         [HttpGet]
-        public ActionResult Logout() 
+        public ActionResult Logout()
         {
             // Removes the session data
-            Session.Clear(); 
+            Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
-        public ActionResult Register() 
+        public ActionResult Register()
         {
             return View();
         }
@@ -87,7 +97,7 @@ namespace FluorecerApp_Client.Controllers
         [HttpPost]
         public async Task<ActionResult> RegisterRequest(UsersEnt entidad)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -131,11 +141,12 @@ namespace FluorecerApp_Client.Controllers
                     TempData["ErrorMessage"] = "Error al registrar el usuario: " + ex.Message;
                     return View(entidad);
                 }
-            } else
+            }
+            else
             {
                 return View("Register", entidad);
             }
-            
+
         }
 
         [HttpGet]
@@ -144,5 +155,62 @@ namespace FluorecerApp_Client.Controllers
             return View();
         }
 
+
+        ////////////////////////////////////////////////////
+        ///
+
+
+
+        [HttpGet]
+        public ActionResult ConsultUsers()
+        {
+            var resp = model.ConsultUsers();
+            return View();
+        }
+
+
+
+        [HttpGet]
+        public ActionResult Editar()
+        {
+            var resp = model.ConsultUser(long.Parse(Session["IdUser"].ToString()));
+            var respRoles = model.ConsultRoles();
+
+            var roles = new List<SelectListItem>();
+            foreach (var item in respRoles)
+            {
+                roles.Add(new SelectListItem { Value = item.RoleId.ToString(), Text = item.RoleName.ToString() });
+            }
+
+            ViewBag.ComboRoles = roles;
+            return View(resp);
+        }
+
+        [HttpPost]
+        public ActionResult EditUser(UsersEnt entidad)
+        {
+
+
+            var resp = model.EditUser(entidad);
+
+            if (resp > 0)
+                return RedirectToAction("ConsultUsers", "User");
+            else
+            {
+                ViewBag.MsjPantalla = "No se ha podido actualizar la información del usuario";
+                return View("ConsultUsers");
+
+
+
+
+            }
+
+        }
+
+
+
+
+
     }
 }
+
