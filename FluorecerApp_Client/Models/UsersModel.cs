@@ -35,6 +35,7 @@ namespace FluorecerApp_Client.Models
             }
         }
 
+
         public List<UsersEnt> ConsultUsers()
         {
             using (var client = new HttpClient())
