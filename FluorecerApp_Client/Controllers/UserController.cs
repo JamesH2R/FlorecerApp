@@ -171,9 +171,9 @@ namespace FluorecerApp_Client.Controllers
 
 
         [HttpGet]
-        public ActionResult Editar()
+        public ActionResult Edit()
         {
-            var resp = model.ConsultUser(long.Parse(Session["IdUser"].ToString()));
+            var resp = model.ConsultUser(long.Parse(Session["UserId"].ToString()));
             var respRoles = model.ConsultRoles();
 
             var roles = new List<SelectListItem>();
@@ -194,7 +194,7 @@ namespace FluorecerApp_Client.Controllers
             var resp = model.EditUser(entidad);
 
             if (resp > 0)
-                return RedirectToAction("ConsultUsers", "User");
+                return RedirectToAction("Index", "User");
             else
             {
                 ViewBag.MsjPantalla = "No se ha podido actualizar la información del usuario";
@@ -207,7 +207,20 @@ namespace FluorecerApp_Client.Controllers
 
         }
 
+        /////////Vistas de Profile and Change Profile Information/////////
+        ///
 
+        [HttpGet]
+        public  ActionResult Profile()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public new ActionResult EditProfile()
+        {
+            return View();
+        }
 
 
 
