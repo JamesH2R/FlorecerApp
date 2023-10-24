@@ -19,13 +19,34 @@ namespace FluorecerApp_Client.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            if (Session["UserId"] != null)
+            {
+                long userId = (long)Session["UserId"];
+
+                string lastname = Session["Lastname"] as string;
+                string email = Session["Email"] as string;
+                string name = Session["Name"] as string;
+
+                // Crea un objeto para representar al usuario
+                var user = new UsersEnt
+                {
+                    UserId = userId,
+                    Name = name,
+                    LastName = lastname,
+                    Email = email,
+                };
+
+                return View(user);
+            }
+            else
+            {
+                return RedirectToAction("Login", "User");
+            }
         }
 
         [HttpGet]
         public ActionResult Login()
         {
-            TempData.Remove("ErrorMessage");
             return View();
         }
 
@@ -51,6 +72,9 @@ namespace FluorecerApp_Client.Controllers
                         UsersEnt result = JsonConvert.DeserializeObject<UsersEnt>(responseContent);
                         Session["RoleName"] = result.RoleName;
                         Session["Name"] = result.Name;
+                        Session["Lastname"] = result.LastName;
+                        Session["Email"] = result.Email;
+                        Session["UserId"] = result.UserId;
 
                         // Redirects to Index (client or admin) after authentication
                         return RedirectToAction("Index", "User");

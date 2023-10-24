@@ -1,8 +1,114 @@
-﻿
+﻿@model FluorecerApp_Client.Entities.UsersEnt
 @{
     ViewBag.Title = "Cliente";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Bienvenido @Session["Name"]</h1>
+<div class="container">
+    <div class="main-body">
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                            <div class="mt-3">
+                                <h4>@Model.Name @Model.LastName</h4>
+                                <p class="text-secondary mb-1">Perfil paciente</p>
+                                <p class="text-muted font-size-sm">Direccion</p>
+                                <button class="btn btn-main btn-round-full">Editar perfil</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Nombre</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.Name @Model.LastName
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Correo</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.Email
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Celular</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                88888888
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Direccion</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                San José
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+             </div>
+            </div>
+
+<section class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="feature-block d-lg-flex">
+                    <div class="feature-item mb-5 mb-lg-0">
+                        <div class="feature-icon mb-4">
+                            <i class="fa-solid fa-wifi"></i>
+                        </div>
+                        <span>Servicios</span>
+                        <h4 class="mb-3">Cita en línea</h4>
+                        <p class="mb-4">Obtén una cita con nuestros profesionales. Hemos hecho su vida más fácil con nuestros servicios.</p>
+                        @Html.ActionLink("Reserva una cita", "Index", "Appointment", null, new { @class = "btn btn-main btn-round-full" })
+                    </div>
+
+                    <div class="feature-item mb-5 mb-lg-0">
+                        <div class="feature-icon mb-4">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+                        <span>Horarios</span>
+                        <h4 class="mb-3">Horarios de servicio</h4>
+                        <ul class="w-hours list-unstyled">
+                            <li class="d-flex justify-content-between">Lun - Vie : <span>8:00 - 17:00</span></li>
+                            <li class="d-flex justify-content-between">Sab - Dom : <span>9:00 - 17:00</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-item mb-5 mb-lg-0">
+                        <div class="feature-icon mb-4">
+                            <i class="fa-solid fa-phone-volume"></i>
+                        </div>
+                        <span>Contáctanos</span>
+                        <h4 class="mb-3">8842 0980</h4>
+                        <p>Contáctanos en caso de requerir más información o reservar una cita.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        </div>
+    </div>
 

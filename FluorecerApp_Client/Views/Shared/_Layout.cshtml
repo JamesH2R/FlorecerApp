@@ -11,180 +11,157 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Assets/css/navs.css")
     @Styles.Render("~/Assets/css/login_register.css")
+    @Styles.Render("~/Assets/css/client_dashboard.css")
     @Styles.Render("~/Assets/css/main_index.css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="wrapp-content">
-        <header class="wrapp-header">
 
-            <!-- MAIN HEADER AND LOGO -->
-            <div class="header-box-01">
+            <nav class="navbar navbar-expand-lg navigation" id="navbar">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-sm-4 col-md-4 col-lg-4 text-xs-center">
-                            <a href="./" >
-                                <img src="~/Assets/img/logo_florecer.png" class="logo" alt="">
-                            </a>
-                        </div>
-                        <div class="col-sm-8 col-md-8 col-lg-8 text-xs-center text-right">
-                            <p class="phone-info">
-                                <span>Contáctenos:</span> 88420980
-                            </p>
-                            <a class="btn-app" href="appointment.html">RESERVA UNA CITA</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <a class="navbar-brand" href="index.html">
+                        <img src="~/Assets/img/logo_florecer.png" alt="" class="img-fluid logo">
+                    </a>
 
-            <!-- NAV BUTTONS -->
-            <div id="sticky-wrapper" class="sticky-wrapper" style="height: 48px;">
-                <div class="header-box-02">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="main-nav">
-                                    <ul class="main-nav__list">
-                                        <li class="active">
-                                            @Html.ActionLink("Inicio", "Index", "Home")
-                                        </li>
-                                        <li class="">
-                                            <a href="#about">Acerca de</a>
-                                        </li>
-                                        <li class="">
-                                            <a href="#contact">Contacto</a>
-                                        </li>
-                                        <li class="">
-                                            <a href="#">Servicios</a>
-                                        </li>
-                                        @if (Session["RoleName"] == null)
-                                        {
-                                            <li>
-                                                @Html.ActionLink("Iniciar Sesión", "Login", "User")
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                @Html.ActionLink("Cerrar Sesión", "Logout", "User")
-                                            </li>
-                                        }
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarmain" aria-controls="navbarmain" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="icofont-navigation-menu"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarmain">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item active">@Html.ActionLink("Inicio", "Index", "Home", null, new { @class = "nav-link" })</li>
+                            <li class="nav-item"><a class="nav-link" href="about.html">Sobre nosotros</a></li>
+                            <li class="nav-item"><a class="nav-link" href="service.html">Servicios</a></li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="blog-sidebar.html" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog <i class="icofont-thin-down"></i></a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown05">
+                                    <li><a class="dropdown-item" href="blog-sidebar.html">Testimonios</a></li>
+                                    <li><a class="dropdown-item" href="blog-single.html">Más noticias</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="contact.html">Contacto</a></li>
+                            @if (Session["Name"] != null)
+                            {
+                                @Html.ActionLink("Cerrar sesión", "Logout", "User", null, new { @class = "nav-link" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Iniciar sesión", "Login", "User", null, new { @class = "nav-link" })
+                            }
+
+                        </ul>
                     </div>
                 </div>
-            </div>
-        </header>
+            </nav>
 
         <div class="">
             @RenderBody()
         </div>
 
-        <footer class="wrapp-footer">
-            <div class="footer-box-01">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-3 col-md-3 col-lg-3">
-                            <a href="./" class="footer-logo">
-                                <img src="img/logo.png" alt="">
-                            </a>
-                            <div class="widget widget-text">
-                                <p>Nuestra clínica de pedagogía más prestigiada del país.</p>
-                                <ul class="social-list-01">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa-brands fa-square-facebook"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa-brands fa-square-instagram"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa-brands fa-square-x-twitter"></i>
-                                        </a>
-                                    </li>
-                                </ul>
+        <footer class="footer section gray-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 mr-auto col-sm-6">
+                        <div class="widget mb-5 mb-lg-0">
+                            <div class="logo mb-4">
+                                <img src="~/Assets/img/logo_florecer.png" alt="" class="img-fluid logo">
                             </div>
+                            <p>Tempora dolorem voluptatum nam vero assumenda voluptate, facilis ad eos obcaecati tenetur veritatis eveniet distinctio possimus.</p>
+
+                            <ul class="list-inline footer-socials mt-4">
+                                <li class="list-inline-item">
+                                    <a href="https://www.facebook.com"><i class="fa-brands fa-facebook"></i></a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="https://twitter.com"><i class="fa-brands fa-twitter"></i></a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="col-sm-3 col-md-3 col-lg-3">
-                            <div class="widget widget-contacts">
-                                <h3 class="widget-title">Más Información</h3>
-                                <ul class="widget-contacts__list">
-                                    <li>Republic Workspace San Pedro, Alameda, San José</li>
-                                    <li>
-                                        <a class="contacts-email" href="maito:companyname@gmail.com">flormarchdi@gmail.com</a>
-                                    </li>
-                                    <li>+506 8842 0980</li>
-                                    <li>
-                                        <p class="work-time">
-                                            Trabajamos para ti en horarios de
-                                            <span>8:00 AM</span> a
-                                            <span>6:00 PM</span>
-                                        </p>
-                                    </li>
-                                </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 col-sm-6">
+                        <div class="widget mb-5 mb-lg-0">
+                            <h4 class="text-capitalize mb-3">Últimas noticias</h4>
+                            <div class="divider mb-4"></div>
+
+                            <ul class="list-unstyled footer-menu lh-35">
+                                <li><a href="#!">Tip 1 </a></li>
+                                <li><a href="#!">Tip 2</a></li>
+                                <li><a href="#!">Tip 3</a></li>
+                                <li><a href="#!">Tip 4</a></li>
+                                <li><a href="#!">Tip 5</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 col-sm-6">
+                        <div class="widget mb-5 mb-lg-0">
+                            <h4 class="text-capitalize mb-3">Enlaces</h4>
+                            <div class="divider mb-4"></div>
+
+                            <ul class="list-unstyled footer-menu lh-35">
+                                <li><a href="#!">Inicio</a></li>
+                                <li><a href="#!">Servicios</a></li>
+                                <li><a href="#!">Preguntas Frecuentes</a></li>
+                                <li><a href="#!">Iniciar Sesión</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="widget widget-contact mb-5 mb-lg-0">
+                            <h4 class="text-capitalize mb-3">Contáctenos</h4>
+                            <div class="divider mb-4"></div>
+
+                            <div class="footer-contact-block mb-4">
+                                <div class="icon d-flex align-items-center">
+                                </div>
+                                <h4 class="mt-2"><a href="mailto:support@email.com">Support@email.com</a></h4>
                             </div>
-                        </div>
-                        <div class="col-sm-3 col-md-3 col-lg-3">
-                            <div class="widget widget-latest-news">
-                                <h3 class="widget-title">Últimas noticias</h3>
-                                <ul class="widget-latest-news__list">
-                                    <li>
-                                        <h4 class="latest-news-title">
-                                            <a href="#">Tengo depresión? 6 señales que pueden ayudarte a identificar</a>
-                                        </h4>
-                                        <p class="latest-news-date">25 de setiembre, 2023</p>
-                                    </li>
-                                    <li>
-                                        <h4 class="latest-news-title">
-                                            <a href="#">Trastorno de ansiedad: Cuál terapia es la correcta para mí</a>
-                                        </h4>
-                                        <p class="latest-news-date">25 de setiembre, 2023</p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 col-md-3 col-lg-3">
-                            <div class="widget widget-quick-links">
-                                <h3 class="widget-title">Accesos rápidos</h3>
-                                <ul class="widget-quick-links__list">
-                                    <li>
-                                        <a href="#">Inicio</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Acerca de</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Servicios</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Experiencia</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Contacto</a>
-                                    </li>
-                                </ul>
+
+                            <div class="footer-contact-block">
+                                <div class="icon d-flex align-items-center">
+                                    <i class="icofont-support mr-3"></i>
+                                    <span class="h6 mb-0">Lun a Vie : 08:30 - 18:00</span>
+                                </div>
+                                <h4 class="mt-2"><a href="">+506 89898989</a></h4>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="copy-footer-01">
-                <div class="container">
+
+                <div class="footer-btm py-4 mt-5">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-lg-6">
+                            <div class="copyright">
+                                Derechos de autor © 2023, Diseñado &amp; Desarrollado por <a href="https://florecer.com/">Florecer</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="subscribe-form text-lg-right mt-5 mt-lg-0">
+                                <form action="#" class="subscribe">
+                                    <input type="text" class="form-control" placeholder="Tu correo electrónico" required="">
+                                    <button type="submit" class="btn btn-main-2 btn-round-full">Suscríbete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
-                        <div class="col-lg-12">
-                            <p class="copy-footer-01__text">© 2017 FLORECER. Todos los derechos reservados.</p>
+                        <div class="col-lg-4">
+                            <a class="backtop scroll-top-to reveal" href="#top">
+                                <i class="fa-brands fa-whatsapp fs-2"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </footer>
-    </div>
+
 
 	@Scripts.Render("~/bundles/jquery")
 	@Scripts.Render("~/bundles/bootstrap")

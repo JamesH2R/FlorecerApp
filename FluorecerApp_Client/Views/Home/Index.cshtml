@@ -3,30 +3,135 @@
 }
 
 <main>
-    <h1 id="title" class="container">AQUI VA EL CONTENIDO DE FLORECER</h1>
-    <section class="d-flex contact" id="contact">
-        <div class="col-md-6 contact_info">
-            <h6 class="subtitle">Contacto</h6>
-            <h3 class="title">
-                Encuéntranos en un <span class="span_title">Mapa</span>
-            </h3>
-            <div class="separator"></div>
-            <div class="contact_description">
-                <p>Se provee un excelente servicio para pacientes privados y ofrecemos servicios confidenciales para profesionales y negocios.</p>
-            </div>
-            <p class="location"><i class="fa-solid fa-location-dot text-white"></i> Republic Workspace San Pedro, Alameda, San José</p>
-            <a href="mailto:companyname@gmail.com" class="contact_email"><i class="fa-solid fa-envelope text-white"></i> flormarchdi@gmail.com</a>
-            <p>
-                Contáctenos:
-                <span class="contact_phone">88420980</span>
-            </p>
-        </div>
+    <section class="banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-xl-7">
+                    <div class="block">
+                        <div class="divider mb-3"></div>
+                        <span class="text-uppercase text-sm letter-spacing ">Servicios completos de psicopedagogía</span>
+                        <h1 class="mb-3 mt-3">Tu psicopedagoga profesional de confianza</h1>
 
-        <div class="col-md-6">
-            <!-- Mapa a la derecha -->
-            <div class="h-100">
-                <div class="contacts_map h-100">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d491.2495024612551!2d-84.05815564951311!3d9.934288431803695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa0e381bf0a314f%3A0x6b7f661b10e8adb4!2sRepublic%20Workspace%20San%20Pedro!5e0!3m2!1ses-419!2scr!4v1696320301175!5m2!1ses-419!2scr" width="100%" height="100%" style="border: 0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <p class="mb-4 pr-5">A repudiandae ipsam labore ipsa voluptatum quidem quae laudantium quisquam aperiam maiores sunt fugit, deserunt rem suscipit placeat.</p>
+                        <div class="btn-container ">
+                            @Html.ActionLink("Reserva una cita", "Index", "Appointment", null, new { @class = "btn btn-main-2 btn-icon btn-round-full" }) 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="feature-block d-lg-flex">
+                        <div class="feature-item mb-5 mb-lg-0">
+                            <div class="feature-icon mb-4">
+                                <i class="fa-solid fa-wifi"></i>
+                            </div>
+                            <span>Servicios</span>
+                            <h4 class="mb-3">Cita en línea</h4>
+                            <p class="mb-4">Obtén una cita con nuestros profesionales. Hemos hecho su vida más fácil con nuestros servicios.</p>
+                            <a href="appoinment.html" class="btn btn-main btn-round-full">Reserva una cita</a>
+                        </div>
+
+                        <div class="feature-item mb-5 mb-lg-0">
+                            <div class="feature-icon mb-4">
+                                <i class="fa-regular fa-clock"></i>
+                            </div>
+                            <span>Horarios</span>
+                            <h4 class="mb-3">Horarios de servicio</h4>
+                            <ul class="w-hours list-unstyled">
+                                <li class="d-flex justify-content-between">Lun - Vie : <span>8:00 - 17:00</span></li>
+                                <li class="d-flex justify-content-between">Sab - Dom : <span>9:00 - 17:00</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-item mb-5 mb-lg-0">
+                            <div class="feature-icon mb-4">
+                                <i class="fa-solid fa-phone-volume"></i>
+                            </div>
+                            <span>Contáctanos</span>
+                            <h4 class="mb-3">8842 0980</h4>
+                            <p>Contáctanos en caso de requerir más información o reservar una cita.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section about">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-4 col-sm-6">
+                    <div class="about-img">
+                        @*<img src="~/Assets/img/bg.jpg" alt="" class="img-fluid">*@
+                        @*<img src="~/Assets/img/kid2.jpg" alt="" class="img-fluid mt-4">*@
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="about-img mt-4 mt-lg-0">
+                        @*<img src="~/Assets/img/kid.jpg" alt="" class="img-fluid">*@
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="about-content pl-4 mt-4 mt-lg-0">
+                        <h2 class="title-color">Cuidado personal <br>&amp; vida sana</h2>
+                        <p class="mt-4 mb-5">Nulla perferendis veniam deleniti ipsum officia dolores repellat laudantium obcaecati neque.</p>
+
+                        <a href="service.html" class="btn btn-main-2 btn-round-full btn-icon">Servicios<i class="fa-solid fa-arrow-right ml-3"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section appoinment">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 ">
+                    <div class="appoinment-content">
+                        <img src="~/Assets/img/contact.jpg" alt="" class="img-fluid">
+                        <div class="emergency">
+                            <h2 class="text-lg"><i class="fa-solid fa-phone text-lg"></i>89898989</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-10 ">
+                    <div class="appoinment-wrap mt-5 mt-lg-0">
+                        <h2 class="mb-2 title-color">Contáctenos</h2>
+                        <p class="mb-4">Mollitia dicta commodi est recusandae iste, natus eum asperiores corrupti qui velit . Iste dolorum atque similique praesentium soluta.</p>
+                        <form id="#" class="appoinment-form" method="post" action="#">
+                            <div class="row">
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <input name="name" id="name" type="text" class="form-control" placeholder="Nombre completo">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <input name="name" id="name" type="text" class="form-control" placeholder="Asunto">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <input name="phone" id="phone" type="Number" class="form-control" placeholder="Teléfono">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group-2 mb-4">
+                                <textarea name="message" id="message" class="form-control" rows="6" placeholder="Escriba su mensaje"></textarea>
+                            </div>
+
+                            <a class="btn btn-main btn-round-full" href="appoinment.html">Enviar<i class="icofont-simple-right ml-2  "></i></a>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

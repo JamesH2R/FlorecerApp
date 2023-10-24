@@ -121,11 +121,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AppointmentController.cs" />
+    <Compile Include="Controllers\AppointmentsHelper.cs" />
     <Compile Include="Controllers\BinnacleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MedicalController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Entities\AppointmentsEnt.cs" />
     <Compile Include="Entities\LoginEnt.cs" />
     <Compile Include="Entities\UsersEnt.cs" />
     <Compile Include="Global.asax.cs">
@@ -135,11 +137,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\css\client_dashboard.css" />
     <Content Include="Assets\css\login_register.css" />
     <Content Include="Assets\css\main_index.css" />
     <Content Include="Assets\css\navs.css" />
+    <Content Include="Assets\img\bg.jpg" />
+    <Content Include="Assets\img\contact.jpg" />
+    <Content Include="Assets\img\kid.jpg" />
+    <Content Include="Assets\img\kid2.jpg" />
     <Content Include="Assets\img\logo.png" />
-    <Content Include="Assets\img\logotest.ico" />
     <Content Include="Assets\img\logo_florecer.png" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -193,10 +199,10 @@
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\PasswordRecovery.cshtml" />
+    <Content Include="Views\Appointment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Appointment\" />
     <Folder Include="Views\Binnacle\" />
     <Folder Include="Views\Medical\" />
     <Folder Include="Views\Test\" />
