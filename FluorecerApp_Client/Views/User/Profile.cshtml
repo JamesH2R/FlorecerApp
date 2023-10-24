@@ -1,0 +1,56 @@
+﻿@model IEnumerable<FluorecerApp_Client.Entities.UsersEnt>
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="row">
+    <div class="col-12">
+
+        @if (ViewBag.MsjPantalla != null)
+        {
+            <div style="text-align:center" class="alert alert-warning" role="alert">
+                @ViewBag.MsjPantalla
+            </div>
+        }
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Email</th>
+                    <th>Edita tu informacion</th>
+                </tr>
+            <thead>
+            <tbody>
+                <tr>
+                    <td>@Session["Name"].ToString()</td>
+                    <td>@Session["NameLastName"].ToString()</td>
+                    <td> @Session["Email"].ToString()</td>
+
+
+                    <td>
+                        <a href="@Url.Action("EditProfile", "User")">Edita tu Informacion personal</a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
