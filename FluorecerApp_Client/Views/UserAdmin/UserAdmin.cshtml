@@ -1,0 +1,75 @@
+﻿@model PagedList.IPagedList<FluorecerApp_Client.Entities.UsersEnt>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "UserAdmin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row justify-content-center">
+    <div class="col-11 mx-auto">
+        @if (ViewBag.MsjPantalla != null)
+        {
+            <div style="text-align:center" class="alert alert-warning" role="alert">
+                @ViewBag.MsjPantalla
+            </div>
+        }
+
+        <br />
+        <h5 class="text-left ms-md-1">Usuarios</h5>
+        <br />
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Buscar usuario por nombre" id="searchTerm">
+            <button class="btn" style="background-color: #3D3372; color: white; border: 1px solid #3D3372;" type="button" onclick="searchUsers()">
+                <i class="fas fa-search"></i> Buscar
+            </button>
+        </div>
+
+        <table class="table table-hover text-center">
+            <thead>
+                <tr>
+                    <th class="colored-column">ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo Electrónico</th>
+                    <th>Estado</th>
+                    <th>Rol ID</th>
+                    <th>Inactivar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.UserId</td>
+                        <td>@user.Name</td>
+                        <td>@user.LastName</td>
+                        <td>@user.Email</td>
+                        <td>@user.Status</td>
+                        <td>@user.RoleId</td>
+                        <td>
+                            @if (user.Status)
+                            {
+                                <button onclick="inactivateUser(@user.UserId)" class="icon-button">
+                                    <i class="fas fa-ban"></i>
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="center-block">
+            @Html.PagedListPager(Model, page => Url.Action("UserConsultation", new { page }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded, LinkToFirstPageFormat = "<i class='fas fa-angle-double-left'></i>", LinkToPreviousPageFormat = "<i class='fas fa-angle-left'></i>", LinkToNextPageFormat = "<i class='fas fa-angle-right'></i>", LinkToLastPageFormat = "<i class='fas fa-angle-double-right'></i>" })
+        </div>
+    </div>
+</div>
+
+<link href="~/Assets/css/UsersAdmin.css" rel="stylesheet" />
+
+
+

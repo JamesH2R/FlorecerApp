@@ -16,164 +16,161 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-
+        <header>
             <nav class="navbar navbar-expand-lg navigation" id="navbar">
                 <div class="container">
                     <a class="navbar-brand" href="index.html">
                         <img src="~/Assets/img/logo_florecer.png" alt="" class="img-fluid logo">
                     </a>
 
-            <!-- NAV BUTTONS -->
-            <div id="sticky-wrapper" class="sticky-wrapper" style="height: 48px;">
-                <div class="header-box-02">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="main-nav">
-                                    <ul class="main-nav__list">
-                                        <li class="active">
-                                            @Html.ActionLink("Inicio", "Index", "Home")
-                                        </li>
-                                        <li class="">
-                                            <a href="#about">Acerca de</a>
-                                        </li>
-                                        <li class="">
-                                            <a href="#contact">Contacto</a>
-                                        </li>
-                                        <li class="">
-                                            <a href="#">Servicios</a>
-                                        </li>
-                                        @if (Session["RoleName"] == null)
-                                        {
-                                            <li>
-                                                @Html.ActionLink("Iniciar Sesión", "Login", "User")
+                    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarmain" aria-controls="navbarmain" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="icofont-navigation-menu"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarmain">
+                     
+                            <ul class="main-nav__list">
+                                <li class="active">
+                                    @Html.ActionLink("Inicio", "Index", "Home")
+                                </li>
+                                <li class="">
+                                    <a href="#about">Acerca de</a>
+                                </li>
+                                <li class="">
+                                    <a href="#contact">Contacto</a>
+                                </li>
+                                <li class="">
+                                    <a href="#">Servicios</a>
+                                </li>
+                                @if (Session["RoleName"] == null)
+                                {
+                                    <li>
+                                        @Html.ActionLink("Iniciar Sesión", "Login", "User")
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        @Html.ActionLink("Cerrar Sesión", "Logout", "User")
+                                    </li>
+                                }
+                            </ul>
+                    
+                    </div>
+                </div>
+            </nav>
+          </header>
+
+                    <div class="">
+                        @RenderBody()
+                    </div>
+
+                    <footer class="footer section gray-bg">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-4 mr-auto col-sm-6">
+                                    <div class="widget mb-5 mb-lg-0">
+                                        <div class="logo mb-4">
+                                            <img src="~/Assets/img/logo_florecer.png" alt="" class="img-fluid logo">
+                                        </div>
+                                        <p>Tempora dolorem voluptatum nam vero assumenda voluptate, facilis ad eos obcaecati tenetur veritatis eveniet distinctio possimus.</p>
+
+                                        <ul class="list-inline footer-socials mt-4">
+                                            <li class="list-inline-item">
+                                                <a href="https://www.facebook.com"><i class="fa-brands fa-facebook"></i></a>
                                             </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                @Html.ActionLink("Cerrar Sesión", "Logout", "User")
+                                            <li class="list-inline-item">
+                                                <a href="https://twitter.com"><i class="fa-brands fa-twitter"></i></a>
                                             </li>
-                                        }
-                                    </ul>
+                                            <li class="list-inline-item">
+                                                <a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-2 col-md-6 col-sm-6">
+                                    <div class="widget mb-5 mb-lg-0">
+                                        <h4 class="text-capitalize mb-3">Últimas noticias</h4>
+                                        <div class="divider mb-4"></div>
+
+                                        <ul class="list-unstyled footer-menu lh-35">
+                                            <li><a href="#!">Tip 1 </a></li>
+                                            <li><a href="#!">Tip 2</a></li>
+                                            <li><a href="#!">Tip 3</a></li>
+                                            <li><a href="#!">Tip 4</a></li>
+                                            <li><a href="#!">Tip 5</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-2 col-md-6 col-sm-6">
+                                    <div class="widget mb-5 mb-lg-0">
+                                        <h4 class="text-capitalize mb-3">Enlaces</h4>
+                                        <div class="divider mb-4"></div>
+
+                                        <ul class="list-unstyled footer-menu lh-35">
+                                            <li><a href="#!">Inicio</a></li>
+                                            <li><a href="#!">Servicios</a></li>
+                                            <li><a href="#!">Preguntas Frecuentes</a></li>
+                                            <li><a href="#!">Iniciar Sesión</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="widget widget-contact mb-5 mb-lg-0">
+                                        <h4 class="text-capitalize mb-3">Contáctenos</h4>
+                                        <div class="divider mb-4"></div>
+
+                                        <div class="footer-contact-block mb-4">
+                                            <div class="icon d-flex align-items-center">
+                                            </div>
+                                            <h4 class="mt-2"><a href="mailto:support@email.com">Support@email.com</a></h4>
+                                        </div>
+
+                                        <div class="footer-contact-block">
+                                            <div class="icon d-flex align-items-center">
+                                                <i class="icofont-support mr-3"></i>
+                                                <span class="h6 mb-0">Lun a Vie : 08:30 - 18:00</span>
+                                            </div>
+                                            <h4 class="mt-2"><a href="">+506 89898989</a></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="footer-btm py-4 mt-5">
+                                <div class="row align-items-center justify-content-between">
+                                    <div class="col-lg-6">
+                                        <div class="copyright">
+                                            Derechos de autor © 2023, Diseñado &amp; Desarrollado por <a href="https://florecer.com/">Florecer</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="subscribe-form text-lg-right mt-5 mt-lg-0">
+                                            <form action="#" class="subscribe">
+                                                <input type="text" class="form-control" placeholder="Tu correo electrónico" required="">
+                                                <button type="submit" class="btn btn-main-2 btn-round-full">Suscríbete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <a class="backtop scroll-top-to reveal" href="#top">
+                                            <i class="fa-brands fa-whatsapp fs-2"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </header>
+                    </footer>
 
-        <div class="">
-            @RenderBody()
-        </div>
-
-        <footer class="footer section gray-bg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 mr-auto col-sm-6">
-                        <div class="widget mb-5 mb-lg-0">
-                            <div class="logo mb-4">
-                                <img src="~/Assets/img/logo_florecer.png" alt="" class="img-fluid logo">
-                            </div>
-                            <p>Tempora dolorem voluptatum nam vero assumenda voluptate, facilis ad eos obcaecati tenetur veritatis eveniet distinctio possimus.</p>
-
-                            <ul class="list-inline footer-socials mt-4">
-                                <li class="list-inline-item">
-                                    <a href="https://www.facebook.com"><i class="fa-brands fa-facebook"></i></a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="https://twitter.com"><i class="fa-brands fa-twitter"></i></a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2 col-md-6 col-sm-6">
-                        <div class="widget mb-5 mb-lg-0">
-                            <h4 class="text-capitalize mb-3">Últimas noticias</h4>
-                            <div class="divider mb-4"></div>
-
-                            <ul class="list-unstyled footer-menu lh-35">
-                                <li><a href="#!">Tip 1 </a></li>
-                                <li><a href="#!">Tip 2</a></li>
-                                <li><a href="#!">Tip 3</a></li>
-                                <li><a href="#!">Tip 4</a></li>
-                                <li><a href="#!">Tip 5</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2 col-md-6 col-sm-6">
-                        <div class="widget mb-5 mb-lg-0">
-                            <h4 class="text-capitalize mb-3">Enlaces</h4>
-                            <div class="divider mb-4"></div>
-
-                            <ul class="list-unstyled footer-menu lh-35">
-                                <li><a href="#!">Inicio</a></li>
-                                <li><a href="#!">Servicios</a></li>
-                                <li><a href="#!">Preguntas Frecuentes</a></li>
-                                <li><a href="#!">Iniciar Sesión</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="widget widget-contact mb-5 mb-lg-0">
-                            <h4 class="text-capitalize mb-3">Contáctenos</h4>
-                            <div class="divider mb-4"></div>
-
-                            <div class="footer-contact-block mb-4">
-                                <div class="icon d-flex align-items-center">
-                                </div>
-                                <h4 class="mt-2"><a href="mailto:support@email.com">Support@email.com</a></h4>
-                            </div>
-
-                            <div class="footer-contact-block">
-                                <div class="icon d-flex align-items-center">
-                                    <i class="icofont-support mr-3"></i>
-                                    <span class="h6 mb-0">Lun a Vie : 08:30 - 18:00</span>
-                                </div>
-                                <h4 class="mt-2"><a href="">+506 89898989</a></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="footer-btm py-4 mt-5">
-                    <div class="row align-items-center justify-content-between">
-                        <div class="col-lg-6">
-                            <div class="copyright">
-                                Derechos de autor © 2023, Diseñado &amp; Desarrollado por <a href="https://florecer.com/">Florecer</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="subscribe-form text-lg-right mt-5 mt-lg-0">
-                                <form action="#" class="subscribe">
-                                    <input type="text" class="form-control" placeholder="Tu correo electrónico" required="">
-                                    <button type="submit" class="btn btn-main-2 btn-round-full">Suscríbete</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <a class="backtop scroll-top-to reveal" href="#top">
-                                <i class="fa-brands fa-whatsapp fs-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-
-
-	@Scripts.Render("~/bundles/jquery")
-	@Scripts.Render("~/bundles/bootstrap")
-	@RenderSection("scripts", required: false)
+                    <script src="~/Scripts/userAdmin.js"></script>
+                    @Scripts.Render("~/bundles/jquery")
+                    @Scripts.Render("~/bundles/bootstrap")
+                    @RenderSection("scripts", required: false)
 </body>
 </html>

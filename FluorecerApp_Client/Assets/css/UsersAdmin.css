@@ -1,0 +1,69 @@
+﻿/* Estilos para la tabla */
+.table thead th {
+    background-color: #3D3372;
+    color: white;
+}
+
+.table {
+    border: 1px solid #3D3372;
+}
+
+    .table thead th {
+        border: 1px solid #3D3372;
+    }
+
+    .table tbody td {
+        border: 1px solid darkgrey;
+    }
+
+
+/* Estilos para el botón con icono */
+.icon-button {
+    background-color: red;
+    border: 1px solid red;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: inherit;
+    color: white;
+    display: inline-block;
+}
+
+.icon-red {
+    color: white;
+}
+
+/* Estilos para la paginación */
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+    .pagination li {
+        margin: 0 5px;
+    }
+
+    .pagination a,
+    .pagination span {
+        padding: 5px 10px;
+        text-decoration: none;
+        color: white;
+        background-color: #3D3372; 
+        border: 1px solid #3D3372; 
+        border-radius: 5px; 
+    }
+
+    .pagination .active a,
+    .pagination .active span {
+        background-color: white; 
+        color: #3D3372; 
+    }
+
+/* Estilos para el boton de busqueda */
+
+.btn-search {
+    background-color: #3D3372;
+    color: white;
+    border: 1px solid #3D3372;
+}

@@ -17,7 +17,8 @@
                                 <h4>@Model.Name @Model.LastName</h4>
                                 <p class="text-secondary mb-1">Perfil paciente</p>
                                 <p class="text-muted font-size-sm">Direccion</p>
-                                <button class="btn btn-main btn-round-full">Editar perfil</button>
+
+                                @Html.ActionLink("Editar Perfil", "Profile", "User", null, new { @class = "btn btn-main btn-round-full" })
                             </div>
                         </div>
                     </div>
@@ -83,17 +84,35 @@
                         @Html.ActionLink("Reserva una cita", "Index", "Appointment", null, new { @class = "btn btn-main btn-round-full" })
                     </div>
 
-                    <div class="feature-item mb-5 mb-lg-0">
-                        <div class="feature-icon mb-4">
-                            <i class="fa-regular fa-clock"></i>
+                    @if (Session["RoleName"].Equals("Admin"))
+                    {
+                        <div class="feature-item mb-5 mb-lg-0">
+                            <div class="feature-icon mb-4">
+                                <i class="fa-regular fa-clock"></i>
+                            </div>
+                            <span>Funcionalidades</span>
+                            <h4 class="mb-3">Administrar usuarios</h4>
+                            <p class="mb-4">Lorem ipsum.</p>
+                            @Html.ActionLink("Ver usuarios", "UserConsultation", "UserAdmin", null, new { @class = "btn btn-main btn-round-full" })
                         </div>
-                        <span>Horarios</span>
-                        <h4 class="mb-3">Horarios de servicio</h4>
-                        <ul class="w-hours list-unstyled">
-                            <li class="d-flex justify-content-between">Lun - Vie : <span>8:00 - 17:00</span></li>
-                            <li class="d-flex justify-content-between">Sab - Dom : <span>9:00 - 17:00</span></li>
-                        </ul>
-                    </div>
+                    }
+                    else
+                    {
+                        <div class="feature-item mb-5 mb-lg-0">
+                            <div class="feature-icon mb-4">
+                                <i class="fa-regular fa-clock"></i>
+                            </div>
+                            <span>Horarios</span>
+                            <h4 class="mb-3">Horarios de servicio</h4>
+                            <ul class="w-hours list-unstyled">
+                                <li class="d-flex justify-content-between">Lun - Vie : <span>8:00 - 17:00</span></li>
+                                <li class="d-flex justify-content-between">Sab - Dom : <span>9:00 - 17:00</span></li>
+                            </ul>
+                        </div>
+                    }
+
+
+
 
                     <div class="feature-item mb-5 mb-lg-0">
                         <div class="feature-icon mb-4">

@@ -223,16 +223,9 @@ namespace FluorecerApp_Client.Controllers
             {
                 ViewBag.MsjPantalla = "No se ha podido actualizar la información del usuario";
                 return View("ConsultUsers");
-
-
-
-
             }
 
         }
-
-        /////////Vistas de Profile and Change Profile Information/////////
-        ///
 
         [HttpGet]
         public  ActionResult Profile()
