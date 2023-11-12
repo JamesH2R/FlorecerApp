@@ -45,7 +45,7 @@
 
 
                     <td>
-                        <a href="@Url.Action("EditProfile", "User")">Edita tu Informacion personal</a>
+                        <a href="@Url.Action("EditProfile", "User", new { q = Session["IdUsuario"] })">Edita tu Informacion personal</a>
                     </td>
                 </tr>
 
