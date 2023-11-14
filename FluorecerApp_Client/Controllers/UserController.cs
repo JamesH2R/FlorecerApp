@@ -180,11 +180,6 @@ namespace FluorecerApp_Client.Controllers
         }
 
 
-        ////////////////////////////////////////////////////
-        ///
-
-
-
         [HttpGet]
         public ActionResult ConsultUsers()
         {

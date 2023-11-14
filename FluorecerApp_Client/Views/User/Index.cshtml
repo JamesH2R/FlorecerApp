@@ -112,16 +112,32 @@
                     }
 
 
+                    @if (Session["RoleName"].Equals("Admin"))
+                    {
 
-
-                    <div class="feature-item mb-5 mb-lg-0">
-                        <div class="feature-icon mb-4">
-                            <i class="fa-solid fa-phone-volume"></i>
+                        <div class="feature-item mb-5 mb-lg-0">
+                            <div class="feature-icon mb-4">
+                                <i class="fa-solid fa-phone-volume"></i>
+                            </div>
+                            <span>Disponibilidad</span>
+                            <h4 class="mb-3">Administrar horarios</h4>
+                            <p>Sección para administrar horarios.</p>
+                            @Html.ActionLink("Administrar horarios", "AppointmentList", "AppointmentAdmin", null, new { @class = "btn btn-main btn-round-full" })
                         </div>
-                        <span>Contáctanos</span>
-                        <h4 class="mb-3">8842 0980</h4>
-                        <p>Contáctanos en caso de requerir más información o reservar una cita.</p>
-                    </div>
+                    }
+                    else
+                    {
+                        <div class="feature-item mb-5 mb-lg-0">
+                            <div class="feature-icon mb-4">
+                                <i class="fa-solid fa-phone-volume"></i>
+                            </div>
+                            <span>Contáctanos</span>
+                            <h4 class="mb-3">8842 0980</h4>
+                            <p>Contáctanos en caso de requerir más información o reservar una cita.</p>
+                        </div>
+                    }
+
+
                 </div>
             </div>
         </div>

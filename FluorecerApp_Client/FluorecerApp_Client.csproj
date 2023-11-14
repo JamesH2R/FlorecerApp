@@ -154,6 +154,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AppointmentAdminController.cs" />
     <Compile Include="Controllers\AppointmentController.cs" />
     <Compile Include="Controllers\AppointmentsHelper.cs" />
     <Compile Include="Controllers\BinnacleController.cs" />
@@ -245,6 +246,7 @@
     <Content Include="Views\Appointment\Index.cshtml" />
     <Content Include="Views\UserAdmin\UserAdmin.cshtml" />
     <Content Include="Views\UserAdmin\SearchUsers.cshtml" />
+    <Content Include="Views\AppointmentAdmin\AppointmentList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

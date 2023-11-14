@@ -16,11 +16,25 @@ namespace FluorecerApp_Client.Controllers
 
         private readonly string apiBaseUrl = "https://localhost:44342/";
         // GET: Appointment
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             if (Session["UserId"] != null)
             {
-                return RedirectToAction("Index", "Appointment");
+                using (HttpClient client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(apiBaseUrl + "api/Appointments");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string content = await response.Content.ReadAsStringAsync();
+                        var appointments = JsonConvert.DeserializeObject<List<AppointmentsEnt>>(content);
+                        return View(appointments);
+                    }
+                    else
+                    {
+                        return View(new List<AppointmentsEnt>());
+                    }
+                }
             }
             else
             {
@@ -30,48 +44,39 @@ namespace FluorecerApp_Client.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateAppointment(AppointmentsEnt model)
+        public async Task<ActionResult> SetAppointment(int appointmentId)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
+                //var userId = ObtenerIdDeUsuarioActual();
+
+                using (HttpClient client = new HttpClient())
                 {
-                    using (HttpClient client = new HttpClient())
+                    string apiUrl = apiBaseUrl + $"api/SetAppointment/{appointmentId}";
+
+                    HttpResponseMessage response = await client.PostAsync(apiUrl, null);
+
+                    if (response.IsSuccessStatusCode)
                     {
-
-                        long patientId = (long)Session["UserId"];
-                        model.PatientId = patientId;
-                        string notas = model.Notes;
-                        client.BaseAddress = new Uri(apiBaseUrl);
-
-                        string json = JsonConvert.SerializeObject(model);
-                        HttpContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-
-                        HttpResponseMessage response = await client.PostAsync("api/NewAppointment", content);
-
-                        if (response.IsSuccessStatusCode)
-                        {
-                            TempData["SuccessMessage"] = "Reserva exitosa.";
-                            return RedirectToAction("Index", "User");
-                        }
-                        else
-                        {
-                            TempData["ErrorMessage"] = "Error reservando su cita";
-                            return View("Index", model);
-                        }
+                        TempData["SuccessMessage"] = "Cita reservada exitosamente.";
+                        return RedirectToAction("Index", "User");
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Error al reservar la cita. Por favor, inténtalo de nuevo.";
+                        return RedirectToAction("Index", "User");
                     }
                 }
-                catch (Exception ex)
-                {
-                    TempData["ErrorMessage"] = "Error al reservar la cita: " + ex.Message;
-                    return View(model);
-                }
             }
-            else
+            catch (Exception ex)
             {
-                return View("Index", model);
+                TempData["ErrorMessage"] = "Error al reservar la cita: " + ex.Message;
+                return RedirectToAction("Index", "User");
             }
         }
+
+
+
 
     }
 }
