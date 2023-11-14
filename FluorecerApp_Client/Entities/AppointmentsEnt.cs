@@ -16,6 +16,6 @@ namespace FluorecerApp_Client.Entities
 
         public bool Available { get; set; }
 
-        public long UserId { get; set; }
+        public long? UserId { get; set; } 
     }
 }
