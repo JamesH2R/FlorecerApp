@@ -1,0 +1,51 @@
+﻿@model FluorecerApp_Client.Entities.TestResultsEnt
+
+@{
+    ViewBag.Title = "SendTest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-11 mx-auto">
+
+        <br />
+        <h5>Enviar Evaluación</h5>
+        <br />
+
+        @if (!string.IsNullOrEmpty(ViewBag.ResultMessage))
+        {
+            <div class="alert alert-info" role="alert">
+                @ViewBag.ResultMessage
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+
+        @using (Html.BeginForm("SendResult", "Test", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            <div class="form-group">
+                <label for="file">Archivo:</label>
+                <input type="file" name="file" class="form-control" required />
+            </div>
+
+            <br />
+            <button type="submit" class="btn btn-primary" onclick="sendResult()">Enviar</button>
+
+        }
+
+        <br />
+        <div style="text-align: center;">
+            <p style="color: midnightblue;"><strong>NOTA:</strong></p>
+            <p style="color: midnightblue;">Se solicita enviar el documento con la evaluación asignada nombrado con la siguiente nomenclatura</p>
+            <p style="color: red;">EvaluaciónX_NombreCompleto</p>
+            <p style="color: midnightblue;">"X" es el número de evaluación. Por ejemplo: Evaluacón1_FlorMarchenaDiaz</p>
+        </div>
+
+    </div>
+</div>
