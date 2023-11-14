@@ -44,6 +44,31 @@ namespace FluorecerApp_Client.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult TestUsers()
+        {
+            return View("~/Views/Test/TestUsers.cshtml");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> DownloadEvaluation(long userId)
+        {
+            try
+            {
+                var result = await model.DownloadEvaluation(userId);
+                ViewBag.ResultMessage = result;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "Ocurrió un error al intentar descargar la evaluación: " + ex.Message;
+                return View("~/Views/Shared/Error.cshtml");
+            }
+
+            // Puedes redirigir a una vista específica para mostrar el mensaje de descarga exitosa.
+            return View("~/Views/Test/TestUsers.cshtml");
+        }
+
+
 
     }
 }

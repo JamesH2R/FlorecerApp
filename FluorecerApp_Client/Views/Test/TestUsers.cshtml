@@ -1,0 +1,50 @@
+﻿@model FluorecerApp_Client.Entities.MedicalTestsEnt
+
+@{
+    ViewBag.Title = "Tests Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-11 mx-auto">
+
+        <br />
+        <h5>Mis Evaluaciones</h5>
+        <br />
+
+        @if (ViewBag.ResultMessage != null)
+        {
+            <div class="alert alert-info" role="alert">
+                @ViewBag.ResultMessage
+            </div>
+        }
+
+        @using (Html.BeginForm("DownloadEvaluation", "Test", FormMethod.Get, new { id = "downloadForm" }))
+        {
+            <div>
+                <p>Para descargar sus evaluaciones digite lo siguiente</p>
+                <label for="UserId">User ID:</label>
+                @Html.TextBoxFor(m => m.UserId, new { @class = "form-control", required = "required", id = "userId" })
+            </div>
+
+            <br />
+            <div>
+                <button type="submit" class="btn btn-primary" onclick="downloadEvaluation()">Descargar Evaluación</button>
+            </div>
+        }
+
+        @* <div>
+            <label for="UserId"> Evaluaciones</label>
+            <a> @Model.FileName</a>
+        </div>
+
+        <br />
+        <div>
+            <button type="submit" class="btn btn-primary" onclick="downloadEvaluation()">Descargar Evaluación</button>
+        </div>*@
+
+    </div>
+</div>
+
+
+

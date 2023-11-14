@@ -10,6 +10,7 @@ namespace FluorecerApp_Client.Models
 {
     public class TestModel
     {
+        //ADMIN
         public async Task<string> AssignEvaluation(MedicalTestsEnt test, Stream fileStream, string fileName)
         {
             using (var client = new HttpClient())
@@ -43,6 +44,39 @@ namespace FluorecerApp_Client.Models
                 }
             }
         }
+
+
+        //USUARIOS
+
+        public async Task<string> DownloadEvaluation(long userId)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    // URL del API
+                    string url = ConfigurationManager.AppSettings["urlApi"].ToString() + "api/DownloadEvaluation/" + userId;
+
+                    // Llamada a la API y manejo de la respuesta
+                    HttpResponseMessage response = await client.GetAsync(url);
+                    string responseString = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return "Evaluación descargada con éxito.";
+                    }
+                    else
+                    {
+                        return "No se pudo descargar la evaluación.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return $"Error al descargar la evaluación: {ex.Message}";
+            }
+        }
+
 
 
     }
