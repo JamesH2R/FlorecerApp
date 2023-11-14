@@ -206,20 +206,25 @@ namespace FluorecerApp_Client.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditUser(UsersEnt entidad)
+        public async Task<ActionResult> EditUser(UsersEnt entidad)
         {
+            // Obtén el UserId de la sesión
+            long userId = (long)Session["UserId"];
 
+
+            entidad.UserId = userId;
 
             var resp = model.EditUser(entidad);
 
             if (resp > 0)
+            {
                 return RedirectToAction("Index", "User");
+            }
             else
             {
                 ViewBag.MsjPantalla = "No se ha podido actualizar la información del usuario";
-                return View("ConsultUsers");
+                return View("Profile");
             }
-
         }
 
         [HttpGet]
