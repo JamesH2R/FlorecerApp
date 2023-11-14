@@ -69,6 +69,35 @@ namespace FluorecerApp_Client.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult SendEvaluation()
+        {
+            return View("~/Views/Test/SendTest.cshtml");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> SendResult(HttpPostedFileBase file)
+        {
+            if (file == null || file.ContentLength == 0)
+            {
+                ViewBag.ErrorMessage = "El archivo es nulo o vacío. No se pudo enviar el resultado.";
+                return View("~/Views/Shared/Error.cshtml");
+            }
+
+            try
+            {
+                var result = await model.SendResult(file);
+                ViewBag.ResultMessage = result;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "Ocurrió un error al intentar enviar el resultado: " + ex.Message;
+                return View("~/Views/Shared/Error.cshtml");
+            }
+
+            return View("~/Views/Test/SendTest.cshtml");
+
+        }
 
     }
 }

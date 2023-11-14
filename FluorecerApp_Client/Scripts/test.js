@@ -42,3 +42,25 @@ function downloadEvaluation(event) {
         })
         .catch(error => console.error('Error:', error));
 }
+
+
+// Función botón método SendResult
+function sendResult(event) {
+    event.preventDefault();
+
+    var form = document.getElementById('sendTestForm');
+    var formData = new FormData(form);
+
+    fetch('/Test/SendResult', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+            // Aquí puedes manejar la respuesta del servidor, por ejemplo, mostrar un mensaje al usuario
+            alert("Evaluación enviada con éxito");
+        })
+        .catch(error => console.error('Error:', error));
+}
+

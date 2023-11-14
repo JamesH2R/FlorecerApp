@@ -43,6 +43,11 @@
             <button type="submit" class="btn btn-primary" onclick="downloadEvaluation()">Descargar Evaluación</button>
         </div>*@
 
+        <br />
+        <p>Si ya realizó su evaluación, proceda a enviarla dando clic en el siguiente botón:</p>
+       
+        @Html.ActionLink("Enviar Evaluación", "SendEvaluation", "Test", null, new { @class = "btn btn-main" })
+
     </div>
 </div>
 

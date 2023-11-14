@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace FluorecerApp_Client.Models
 {
@@ -76,6 +78,49 @@ namespace FluorecerApp_Client.Models
                 return $"Error al descargar la evaluación: {ex.Message}";
             }
         }
+
+        public async Task<string> SendResult(HttpPostedFileBase file)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                using (var content = new MultipartFormDataContent())
+                {
+                    // Configuración del contenido del formulario
+                    content.Headers.ContentType.MediaType = "multipart/form-data";
+
+                    // Agregar el archivo al formulario
+                    var fileContent = new StreamContent(file.InputStream);
+                    fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+                    {
+                        Name = "\"file\"",
+                        FileName = $"\"{file.FileName}\""
+                    };
+                    content.Add(fileContent);
+
+                    // URL del API
+                    string url = ConfigurationManager.AppSettings["urlApi"].ToString() + "api/SendResult";
+
+                    // Llamada a la API y manejo de la respuesta
+                    HttpResponseMessage response = await client.PostAsync(url, content);
+                    string responseString = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return "Evaluación enviada con éxito.";
+                    }
+                    else
+                    {
+                        return "No se pudo enviar la evaluación.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return $"Error al enviar la evaluación: {ex.Message}";
+            }
+        }
+
 
 
 

@@ -163,6 +163,7 @@
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Entities\AppointmentsEnt.cs" />
+    <Compile Include="Entities\TestResultsEnt.cs" />
     <Compile Include="Entities\MedicalTestEnt.cs" />
     <Compile Include="Entities\LoginEnt.cs" />
     <Compile Include="Entities\RolesEnt.cs" />
@@ -300,6 +301,7 @@
     <Content Include="Views\UserAdmin\SearchUsers.cshtml" />
     <Content Include="Views\Test\Assign.cshtml" />
     <Content Include="Views\Test\TestUsers.cshtml" />
+    <Content Include="Views\Test\SendTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
