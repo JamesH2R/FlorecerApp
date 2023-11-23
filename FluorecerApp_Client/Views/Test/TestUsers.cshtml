@@ -21,31 +21,18 @@
 
         @using (Html.BeginForm("DownloadEvaluation", "Test", FormMethod.Get, new { id = "downloadForm" }))
         {
-            <div>
-                <p>Para descargar sus evaluaciones digite lo siguiente</p>
-                <label for="UserId">User ID:</label>
-                @Html.TextBoxFor(m => m.UserId, new { @class = "form-control", required = "required", id = "userId" })
-            </div>
+            @Html.HiddenFor(m => m.UserId)
 
             <br />
             <div>
+                <p>Descargue sus evaluaciones:</p>
                 <button type="submit" class="btn btn-primary" onclick="downloadEvaluation()">Descargar Evaluación</button>
             </div>
         }
 
-        @* <div>
-            <label for="UserId"> Evaluaciones</label>
-            <a> @Model.FileName</a>
-        </div>
-
         <br />
-        <div>
-            <button type="submit" class="btn btn-primary" onclick="downloadEvaluation()">Descargar Evaluación</button>
-        </div>*@
+        <p>Si ya realizó su evaluación, proceda a enviarla:</p>
 
-        <br />
-        <p>Si ya realizó su evaluación, proceda a enviarla dando clic en el siguiente botón:</p>
-       
         @Html.ActionLink("Enviar Evaluación", "SendEvaluation", "Test", null, new { @class = "btn btn-main" })
 
     </div>

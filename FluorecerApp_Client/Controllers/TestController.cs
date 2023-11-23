@@ -51,10 +51,13 @@ namespace FluorecerApp_Client.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> DownloadEvaluation(long userId)
+        public async Task<ActionResult> DownloadEvaluation()
         {
             try
             {
+                // Obtener el UserId de la sesión
+                long userId = (long)Session["UserId"];
+
                 var result = await model.DownloadEvaluation(userId);
                 ViewBag.ResultMessage = result;
             }
@@ -64,7 +67,6 @@ namespace FluorecerApp_Client.Controllers
                 return View("~/Views/Shared/Error.cshtml");
             }
 
-            // Puedes redirigir a una vista específica para mostrar el mensaje de descarga exitosa.
             return View("~/Views/Test/TestUsers.cshtml");
         }
 
