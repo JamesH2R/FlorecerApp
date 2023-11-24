@@ -5,21 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<div class="row">
-    <div class="col-12">
+<div class="row justify-content-center">
+    <div class="col-11 mx-auto">
 
         @if (ViewBag.MsjPantalla != null)
         {
@@ -28,13 +15,18 @@
             </div>
         }
 
+        <br>
+        <h5>Editar Perfil</h5>.
+        <br>
+        <br>
+
         <table class="table table-hover">
             <thead>
                 <tr>
                     <th>Nombre</th>
                     <th>Apellidos</th>
                     <th>Email</th>
-                    <th>Edita tu informacion</th>
+                    <th>Edita tu información</th>
                 </tr>
             <thead>
             <tbody>
@@ -45,7 +37,8 @@
 
 
                     <td>
-                        <a href="@Url.Action("EditProfile", "User", new { q = Session["IdUsers"] })">Edita tu Informacion personal</a>
+                        <a href="@Url.Action("EditProfile", "User", new { q = Session["IdUsers"] })" class="boton-profile-edit">Editar información</a>
+
                     </td>
                 </tr>
 
@@ -54,3 +47,5 @@
 
     </div>
 </div>
+
+<link href="~/Assets/css/UsersEdit.css" rel="stylesheet" />

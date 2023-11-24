@@ -37,12 +37,15 @@ namespace FluorecerApp_Client.Models
                     {
                         return "Evaluación asignada con éxito.";
                     }
-
-                    return "No se pudo asignar la evaluación.";
+                    else
+                    {
+                        return "No se pudo asignar la evaluación.";
+                    }
+                    
                 }
                 catch (Exception ex)
                 {
-                    return ex.Message;
+                    return $"Error al asignar la evaluación: {ex.Message}";
                 }
             }
         }

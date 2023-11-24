@@ -1,0 +1,8 @@
+﻿.boton-profile-edit {
+    background-color: #3D3372; /* Color de fondo */
+    color: white; /* Color del texto blanco */
+    padding: 10px 20px; /* Espaciado interno del botón */
+    text-decoration: none; /* Elimina el subrayado predeterminado en los enlaces */
+    border-radius: 5px; /* Bordes redondeados */
+    display: inline-block; /* Hace que el botón se comporte como un elemento en línea con márgenes superior e inferior */
+}

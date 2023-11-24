@@ -183,6 +183,8 @@
     <Content Include="Assets\css\login_register.css" />
     <Content Include="Assets\css\main_index.css" />
     <Content Include="Assets\css\navs.css" />
+    <Content Include="Assets\css\Test.css" />
+    <Content Include="Assets\css\UsersEdit.css" />
     <Content Include="Assets\css\UsersAdmin.css" />
     <Content Include="Assets\img\bg.jpg" />
     <Content Include="Assets\img\contact.jpg" />

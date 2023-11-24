@@ -26,14 +26,14 @@
             <br />
             <div>
                 <p>Descargue sus evaluaciones:</p>
-                <button type="submit" class="btn btn-primary" onclick="downloadEvaluation()">Descargar Evaluación</button>
+                <button type="submit" class="btn btn-primary" style="background-color: #3D3372; color: white;" onclick="downloadEvaluation()">Descargar Evaluación</button>
             </div>
         }
 
         <br />
         <p>Si ya realizó su evaluación, proceda a enviarla:</p>
 
-        @Html.ActionLink("Enviar Evaluación", "SendEvaluation", "Test", null, new { @class = "btn btn-main" })
+        @Html.ActionLink("Enviar Evaluación", "SendEvaluation", "Test", null, new { @class = "btn btn-primary", style = "background-color: #1C8C4D; color: white;" })
 
     </div>
 </div>

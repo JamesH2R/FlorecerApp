@@ -12,33 +12,47 @@
         <h5>Asignar Evaluación</h5>
         <br />
 
+        @if (!string.IsNullOrEmpty(ViewBag.ResultMessage))
+        {
+            <div class="alert alert-info" role="alert">
+                @ViewBag.ResultMessage
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+
+        <p>Digite los datos requeridos para asignar la evaluación:</p>
+
         @using (Html.BeginForm("AssignEvaluation", "Test", FormMethod.Post, new { enctype = "multipart/form-data", id = "assignForm", onsubmit = "submitForm(event)" }))
         {
-            <div>
-                <label for="UserId">User ID:</label>
-                @Html.TextBoxFor(m => m.UserId, new { @class = "form-control", required = "required", id = "userId" })
+            <div class="form-group">
+
+                @Html.TextBoxFor(m => m.UserId, new { @type = "number", @class = "form-control", required = "required", id = "userId", placeholder = "ID del paciente" })
             </div>
 
-            <div>
-                <label for="FileName">File Name:</label>
-                @Html.TextBoxFor(m => m.FileName, new { @class = "form-control", required = "required", id = "fileName" })
+            <div class="form-group">
+                <br />
+                @Html.TextBoxFor(m => m.FileName, new { @type = "text", @class = "form-control", required = "required", id = "fileName", placeholder = "Nombre del archivo" })
             </div>
 
-            <div>
-                <label for="Date">Date:</label>
-                @Html.TextBoxFor(m => m.Date, new { @class = "form-control", required = "required", id = "date" })
-            </div>
             <br />
             <div class="form-group">
-                <label for="FilePath">File:</label>
-                <input type="file" name="file" id="file" class="form-control" required/>
+                <label for="FilePath">Archivo:</label>
+                <input type="file" name="file" id="file" class="form-control custom-file-input" required />
             </div>
             <br />
             <div>
-                <button type="submit" class="btn btn-primary">Asignar</button>
+                <button type="submit" class="btn btn-primary" style="background-color: #3D3372; color: white;">Asignar</button>
             </div>
         }
 
     </div>
 
 </div>
+
+<link href="~/Assets/css/Test.css" rel="stylesheet" />
