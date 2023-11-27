@@ -15,8 +15,27 @@ namespace FluorecerApp_Client.Controllers
         TestModel model = new TestModel();
 
         [HttpGet]
-        public ActionResult Assign()
+        public async Task<ActionResult> Assign()
         {
+            if (TempData.ContainsKey("PostEjecutado") && (bool)TempData["PostEjecutado"])
+            {
+
+                var lastNames = await model.GetDropdownLastNames();
+                ViewBag.LastNames = new SelectList(lastNames, "UserId", "LastName");
+
+                TempData["DesdePost"] = true;
+            }
+            else
+            {
+                var lastNames = await model.GetDropdownLastNames();
+                ViewBag.LastNames = new SelectList(lastNames, "UserId", "LastName");
+                return View("~/Views/Test/Assign.cshtml");
+            }
+            if (TempData.ContainsKey("ResultMessage")) { ViewBag.ResultMessage = TempData["ResultMessage"]; }
+            TempData.Remove("PostEjecutado"); TempData.Remove("ResultMessage"); // Limpiar el mensaje de TempData
+
+
+
             return View("~/Views/Test/Assign.cshtml");
         }
 
@@ -31,18 +50,34 @@ namespace FluorecerApp_Client.Controllers
 
             try
             {
+                var selectedUserId = test.UserId;
+
+                var selectedUser = await model.GetUserById(selectedUserId);
+                if (selectedUser != null)
+                {
+                    // Asignar el UserId y LastName al objeto MedicalTestsEnt
+                    test.UserId = selectedUser.UserId;
+                    test.LastName = selectedUser.LastName;
+                }
+
                 var result = await model.AssignEvaluation(test, file.InputStream, file.FileName);
                 ViewBag.ResultMessage = result;
+
+                // Establecer un indicador en TempData para indicar que se ejecutó un POST antes de este método
+                TempData["PostEjecutado"] = true;
+
             }
+
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = "Ocurrió un error al intentar asignar la evaluación: " + ex.Message;
                 return View("~/Views/Shared/Error.cshtml");
             }
 
-            return View("~/Views/Test/Assign.cshtml");
+            ViewBag.ResultMessage = "Evaluación asignada con éxito"; TempData["ResultMessage"] = ViewBag.ResultMessage; // Guardar en TempData
+            // Redireccionar al método GET "Assign" del controlador "Test"
+            return RedirectToAction("Assign", "Test");
         }
-
 
         [HttpGet]
         public ActionResult TestUsers()

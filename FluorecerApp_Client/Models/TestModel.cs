@@ -13,6 +13,7 @@ namespace FluorecerApp_Client.Models
     public class TestModel
     {
         //ADMIN
+
         public async Task<string> AssignEvaluation(MedicalTestsEnt test, Stream fileStream, string fileName)
         {
             using (var client = new HttpClient())
@@ -46,6 +47,61 @@ namespace FluorecerApp_Client.Models
                 catch (Exception ex)
                 {
                     return $"Error al asignar la evaluación: {ex.Message}";
+                }
+            }
+        }
+
+        public async Task<List<UsersEnt>> GetDropdownLastNames()
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    string url = ConfigurationManager.AppSettings["urlApi"].ToString() + "api/getUserDropdown";
+                    HttpResponseMessage response = await client.GetAsync(url);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var jsonResult = await response.Content.ReadAsStringAsync();
+                        var result = Newtonsoft.Json.JsonConvert.DeserializeObject<List<UsersEnt>>(jsonResult);
+                        return result;
+                    }
+                    else
+                    {
+                        return new List<UsersEnt>();
+                    }
+                }
+                catch
+                {
+                    // Manejar el error según tus necesidades
+                    return new List<UsersEnt>();
+                }
+            }
+        }
+
+        public async Task<UsersEnt> GetUserById(long userId)
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    string url = ConfigurationManager.AppSettings["urlApi"].ToString() + $"api/getUserById/{userId}";
+                    HttpResponseMessage response = await client.GetAsync(url);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var jsonResult = await response.Content.ReadAsStringAsync();
+                        var result = Newtonsoft.Json.JsonConvert.DeserializeObject<UsersEnt>(jsonResult);
+                        return result;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                catch
+                {
+                    return null;
                 }
             }
         }
