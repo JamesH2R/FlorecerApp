@@ -26,13 +26,12 @@
             </div>
         }
 
-        <p>Digite los datos requeridos para asignar la evaluación:</p>
+        <p>Seleccione y digite los datos requeridos para asignar la evaluación</p>
 
         @using (Html.BeginForm("AssignEvaluation", "Test", FormMethod.Post, new { enctype = "multipart/form-data", id = "assignForm", onsubmit = "submitForm(event)" }))
         {
             <div class="form-group">
-                <br />
-                @Html.DropDownListFor(m => m.UserId, ViewBag.LastNames as SelectList, "-- Seleccione un Apellido --", new { @class = "form-control", required = "required" })
+                @Html.DropDownListFor(m => m.UserId, ViewBag.LastNames as SelectList, "-- Seleccione un Paciente --", new { @class = "form-control", required = "required" })
             </div>
 
             <div class="form-group">
@@ -49,6 +48,18 @@
             <div>
                 <button type="submit" class="btn btn-primary" style="background-color: #3D3372; color: white;">Asignar</button>
             </div>
+        }
+
+        <br />
+        <p>Seleccione al paciente para eliminar las evaluaciones</p>
+
+        @using (Html.BeginForm("DeleteEvaluations", "Test", FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.DropDownListFor(model => model.UserId, (SelectList)ViewBag.LastNames, "-- Seleccione un Paciente --", new { @class = "form-control" })
+            </div>
+            <br />
+            <button type="submit" class="btn btn-danger">Eliminar Evaluaciones</button>
         }
 
     </div>

@@ -7,12 +7,15 @@ using System.Web;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 using System.Reflection;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FluorecerApp_Client.Controllers
 {
     public class TestController : Controller
     {
         TestModel model = new TestModel();
+
+        //ADMIN
 
         [HttpGet]
         public async Task<ActionResult> Assign()
@@ -78,6 +81,42 @@ namespace FluorecerApp_Client.Controllers
             // Redireccionar al método GET "Assign" del controlador "Test"
             return RedirectToAction("Assign", "Test");
         }
+
+        [HttpPost]
+        public async Task<ActionResult> DeleteEvaluations(MedicalTestsEnt test)
+        {
+            try
+            {
+               var selectedUserId = test.UserId;
+
+                var selectedUser = await model.GetUserById(selectedUserId);
+                if (selectedUser != null)
+                {
+                    // Asignar el UserId y LastName al objeto MedicalTestsEnt
+                    test.UserId = selectedUser.UserId;
+                    test.LastName = selectedUser.LastName;
+                }
+
+
+                var result = await model.DeleteEvaluations(test.UserId);
+                ViewBag.ResultMessage = result;
+
+                // Establecer un indicador en TempData para indicar que se ejecutó un POST antes de este método
+                TempData["PostEjecutado"] = true;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "Ocurrió un error al intentar eliminar la evaluación: " + ex.Message;
+                return View("~/Views/Shared/Error.cshtml");
+            }
+
+            ViewBag.ResultMessage = "Evaluación eliminada con éxito"; TempData["ResultMessage"] = ViewBag.ResultMessage; // Guardar en TempData
+            // Redireccionar al método GET "Assign" del controlador "Test"
+            return RedirectToAction("Assign", "Test");
+        }
+
+
+        //USUARIOS
 
         [HttpGet]
         public ActionResult TestUsers()

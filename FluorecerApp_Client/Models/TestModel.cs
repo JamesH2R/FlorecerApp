@@ -42,7 +42,7 @@ namespace FluorecerApp_Client.Models
                     {
                         return "No se pudo asignar la evaluación.";
                     }
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -104,6 +104,36 @@ namespace FluorecerApp_Client.Models
                     return null;
                 }
             }
+        }
+
+        public async Task<string> DeleteEvaluations(long userId)
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    // URL del API
+                    string url = ConfigurationManager.AppSettings["urlApi"].ToString() + $"api/DeleteEvaluations/{userId}";
+
+                    // Llamada a la API y manejo de la respuesta
+                    HttpResponseMessage response = await client.DeleteAsync(url);
+                    string responseString = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return "Evaluaciones eliminadas con éxito.";
+                    }
+                    else
+                    {
+                        return "No se pudo eliminar las evaluaciones.";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return $"Error al eliminar las evaluaciones: {ex.Message}";
+                }
+            }
+            
         }
 
 
