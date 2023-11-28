@@ -118,11 +118,27 @@ namespace FluorecerApp_Client.Controllers
 
         //USUARIOS
 
-        [HttpGet]
-        public ActionResult TestUsers()
+        public async Task<ActionResult> TestUsers()
         {
-            return View("~/Views/Test/TestUsers.cshtml");
+            try
+            {
+                // Obtener el UserId de la sesión
+                long userId = (long)Session["UserId"];
+
+                // Llamar a GetUserEvaluationNames para obtener los nombres de archivo
+                var fileNames = await model.GetUserEvaluationNames(userId);
+                ViewBag.FileNames = fileNames;
+
+                // Cargar la vista TestUsers.cshtml
+                return View("~/Views/Test/TestUsers.cshtml");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "Ocurrió un error al intentar obtener los nombres de archivo de la evaluación: " + ex.Message;
+                return View("~/Views/Shared/Error.cshtml");
+            }
         }
+
 
         [HttpGet]
         public async Task<ActionResult> DownloadEvaluation()
@@ -174,6 +190,28 @@ namespace FluorecerApp_Client.Controllers
             return View("~/Views/Test/SendTest.cshtml");
 
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetUserEvaluationNames()
+        {
+            try
+            {
+                // Obtener el UserId de la sesión
+                long userId = (long)Session["UserId"];
+
+                var fileNames = await model.GetUserEvaluationNames(userId);
+                ViewBag.FileNames = fileNames;
+
+                // Pasar a la vista la lista de nombres de los archivos
+                return View("~/Views/Test/TestUsers.cshtml");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "Ocurrió un error al intentar obtener los nombres de archivo de la evaluación: " + ex.Message;
+                return View("~/Views/Shared/Error.cshtml");
+            }
+        }
+
 
     }
 }

@@ -138,7 +138,6 @@ namespace FluorecerApp_Client.Models
 
 
         //USUARIOS
-
         public async Task<string> DownloadEvaluation(long userId)
         {
             try
@@ -210,7 +209,32 @@ namespace FluorecerApp_Client.Models
             }
         }
 
+        public async Task<List<string>> GetUserEvaluationNames(long userId)
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    string url = ConfigurationManager.AppSettings["urlApi"].ToString() + $"api/GetUserEvaluationNames/{userId}";
+                    HttpResponseMessage response = await client.GetAsync(url);
 
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var jsonResult = await response.Content.ReadAsStringAsync();
+                        var result = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(jsonResult);
+                        return result;
+                    }
+                    else
+                    {
+                        return new List<string>();
+                    }
+                }
+                catch
+                {
+                    return new List<string>();
+                }
+            }
+        }
 
 
     }

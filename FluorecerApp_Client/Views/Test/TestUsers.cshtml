@@ -19,11 +19,21 @@
             </div>
         }
 
+        @if (ViewBag.FileNames != null && ViewBag.FileNames.Count > 0)
+        {
+            <h6>Evaluaciones disponibles:</h6>
+            <ul>
+                @foreach (var fileName in ViewBag.FileNames)
+                {
+                    <li>@fileName</li>
+                }
+            </ul>
+        }
+
         @using (Html.BeginForm("DownloadEvaluation", "Test", FormMethod.Get, new { id = "downloadForm" }))
         {
             @Html.HiddenFor(m => m.UserId)
 
-            <br />
             <div>
                 <p>Descargue sus evaluaciones:</p>
                 <button type="submit" class="btn btn-primary" style="background-color: #3D3372; color: white;" onclick="downloadEvaluation()">Descargar Evaluación</button>
