@@ -281,6 +281,7 @@
     <Content Include="Views\Test\Assign.cshtml" />
     <Content Include="Views\Test\SendTest.cshtml" />
     <Content Include="Views\Test\TestUsers.cshtml" />
+    <Content Include="Views\Test\TestUsersDone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

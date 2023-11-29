@@ -82,7 +82,7 @@
                                         <i class="fas fa-user-edit"></i>
                                     </div>
                                     <span>Usuarios</span>
-                                    <h4 class="mb-3">Administrar usuarios</h4>
+                                    <h4 class="mb-3">Administrar Usuarios</h4>
                                     <p class="mb-4">Administre a todos los usuarios registrados en el sistema.</p>
                                     @Html.ActionLink("Ver usuarios", "UserConsultation", "UserAdmin", null, new { @class = "btn btn-main btn-round-full" })
                                 </div>
@@ -95,7 +95,15 @@
                                     <p class="mb-4">Asigne las evaluaciones psicopedagogas que requiera el cliente.</p>
                                     @Html.ActionLink("Asignar", "Assign", "Test", null, new { @class = "btn btn-main btn-round-full" })
                                 </div>
-
+                                <div class="feature-item mb-5 mb-lg-0">
+                                    <div class="feature-icon mb-4">
+                                        <i class="fas fa-download"></i>
+                                    </div>
+                                    <span>Evaluaciones</span>
+                                    <h4 class="mb-3">Descargar Evaluaciones</h4>
+                                    <p class="mb-4">Descargue las evaluaciones que han realizado los pacientes.</p>
+                                    @Html.ActionLink("Ver Pruebas de Usuarios", "TestUsersDone", "Test", null, new { @class = "btn btn-main btn-round-full" })
+                                </div>
                             }
 
                             @if (Session["RoleName"].Equals("Client"))

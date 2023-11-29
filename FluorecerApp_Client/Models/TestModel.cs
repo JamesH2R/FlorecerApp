@@ -5,6 +5,7 @@ using System.Configuration;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -133,7 +134,53 @@ namespace FluorecerApp_Client.Models
                     return $"Error al eliminar las evaluaciones: {ex.Message}";
                 }
             }
-            
+
+        }
+
+        public List<TestResultsEnt> TestUsersDone()
+        {
+            using (var client = new HttpClient())
+            {
+
+                string url = ConfigurationManager.AppSettings["urlApi"].ToString() + "api/GetAllPdfFileNames";
+
+                HttpResponseMessage resp = client.GetAsync(url).Result;
+
+                if (resp.IsSuccessStatusCode)
+                {
+                    return resp.Content.ReadFromJsonAsync<List<TestResultsEnt>>().Result;
+                }
+
+                return new List<TestResultsEnt>();
+            }
+        }
+        public async Task<string> DownloadTestResult(long ResultId)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    // URL del API
+                    string url = ConfigurationManager.AppSettings["urlApi"].ToString() + "api/DownloadTestResult/" + ResultId;
+
+                    // Llamada a la API y manejo de la respuesta
+                    HttpResponseMessage response = await client.GetAsync(url);
+                    string responseString = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return "Evaluación descargada con éxito.";
+                    }
+                    else
+                    {
+                        return "No se pudo descargar la evaluación.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return $"Error al descargar la evaluación: {ex.Message}";
+            }
         }
 
 

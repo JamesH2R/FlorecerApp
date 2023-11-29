@@ -115,6 +115,48 @@ namespace FluorecerApp_Client.Controllers
             return RedirectToAction("Assign", "Test");
         }
 
+        [HttpGet]
+        public ActionResult TestUsersDone()
+        {
+            var resp = model.TestUsersDone();
+            return View(resp);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> DownloadTestResult(long ResultId)
+        {
+            try
+            {
+                // Llamar al método DownloadEvaluation que devuelve el archivo para descargar
+                var fileBytes = await model.DownloadTestResult(ResultId);
+
+                if (fileBytes != null)
+                {
+                    // Obtener el nombre del archivo según el ResultId
+                    string fileName = GetFileNameForResultId(ResultId);
+
+                    TempData["SuccessMessage"] = "Evaluación descargada con éxito.";
+                    return RedirectToAction("TestUsersDone", "Test");
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "El archivo no se encontró para la descarga.";
+                    return View("~/Views/Shared/Error.cshtml");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "Ocurrió un error al intentar descargar la evaluación: " + ex.Message;
+                return View("~/Views/Shared/Error.cshtml");
+            }
+        }
+
+        private string GetFileNameForResultId(long resultId)
+        {
+
+            return $"{resultId}.pdf";
+        }
+
 
         //USUARIOS
 

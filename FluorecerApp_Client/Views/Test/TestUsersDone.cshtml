@@ -1,0 +1,49 @@
+﻿@model IEnumerable<FluorecerApp_Client.Entities.TestResultsEnt>
+
+@{
+    ViewBag.Title = "Tests Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-11 mx-auto">
+
+        @if (ViewBag.MsjPantalla != null)
+        {
+            <div style="text-align:center" class="alert alert-warning" role="alert">
+                @ViewBag.MsjPantalla
+            </div>
+        }
+
+        <br>
+        <h5>Test Usuarios</h5>
+        <br>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nombre del PDF</th>
+                    <th>Descargar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.FilePath</td>
+
+                        <td>
+                            <a href="@Url.Action("DownloadTestResult", "Test", new { resultId = item.ResultId })"><i class="fa fa-download text-success"></i></a>
+
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Delete","Test", new { q = item.ResultId })"><i class="fa fa-trash text-danger"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
