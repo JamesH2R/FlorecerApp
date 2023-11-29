@@ -5,65 +5,73 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row justify-content-center">
-    <div class="col-11 mx-auto">
+<br />
+<div class="container">
+    <div class="main-body">
+        <section class="">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="feature-block d-lg-flex justify-content-center">
 
-        <br />
-        <h5>Asignar Evaluación</h5>
-        <br />
+                            @if (!string.IsNullOrEmpty(ViewBag.ResultMessage))
+                            {
+                                <div class="alert alert-success" role="alert">
+                                    @ViewBag.ResultMessage
+                                </div>
+                            }
 
-        @if (!string.IsNullOrEmpty(ViewBag.ResultMessage))
-        {
-            <div class="alert alert-info" role="alert">
-                @ViewBag.ResultMessage
+                            @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @ViewBag.ErrorMessage
+                                </div>
+                            }
+
+                            <div class="feature-item mb-5 mb-lg-0">
+
+                                <h5>Asignar Evaluación</h5>
+                                @using (Html.BeginForm("AssignEvaluation", "Test", FormMethod.Post, new { enctype = "multipart/form-data", id = "assignForm", onsubmit = "submitForm(event)" }))
+                                {
+                                    <p>Ingrese los datos requeridos para asignar la evaluación</p>
+
+                                    <div class="form-group">
+                                        @Html.DropDownListFor(m => m.UserId, ViewBag.LastNames as SelectList, "-- Seleccione un Paciente --", new { @class = "form-control", required = "required" })
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(m => m.FileName, new { @type = "text", @class = "form-control", required = "required", id = "fileName", placeholder = "Nombre del archivo" })
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <label for="FilePath">Archivo:</label>
+                                        <input type="file" name="file" id="file" class="form-control custom-file-input" required />
+                                    </div>
+                                    <br>
+                                    <button type="submit" class="btn btn-primary" style="background-color: #3D3372; color: white;">Asignar</button>
+                                }
+
+                            </div>
+
+                            <div class="feature-item mb-5 mb-lg-0">
+                                <h5>Eliminar Evaluación</h5>
+                                @using (Html.BeginForm("DeleteEvaluations", "Test", FormMethod.Post))
+                                {
+                                    <p>Seleccione al paciente para eliminar las evaluaciones</p>
+
+                                    <div class="form-group">
+                                        @Html.DropDownListFor(model => model.UserId, (SelectList)ViewBag.LastNames, "-- Seleccione un Paciente --", new { @class = "form-control" })
+                                    </div>
+                                    <br>
+                                    <button type="submit" class="btn btn-danger">Eliminar Evaluaciones</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        }
-
-        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
-        {
-            <div class="alert alert-danger" role="alert">
-                @ViewBag.ErrorMessage
-            </div>
-        }
-
-        <p>Seleccione y digite los datos requeridos para asignar la evaluación</p>
-
-        @using (Html.BeginForm("AssignEvaluation", "Test", FormMethod.Post, new { enctype = "multipart/form-data", id = "assignForm", onsubmit = "submitForm(event)" }))
-        {
-            <div class="form-group">
-                @Html.DropDownListFor(m => m.UserId, ViewBag.LastNames as SelectList, "-- Seleccione un Paciente --", new { @class = "form-control", required = "required" })
-            </div>
-
-            <div class="form-group">
-                <br />
-                @Html.TextBoxFor(m => m.FileName, new { @type = "text", @class = "form-control", required = "required", id = "fileName", placeholder = "Nombre del archivo" })
-            </div>
-
-            <br />
-            <div class="form-group">
-                <label for="FilePath">Archivo:</label>
-                <input type="file" name="file" id="file" class="form-control custom-file-input" required />
-            </div>
-            <br />
-            <div>
-                <button type="submit" class="btn btn-primary" style="background-color: #3D3372; color: white;">Asignar</button>
-            </div>
-        }
-
-        <br />
-        <p>Seleccione al paciente para eliminar las evaluaciones</p>
-
-        @using (Html.BeginForm("DeleteEvaluations", "Test", FormMethod.Post))
-        {
-            <div class="form-group">
-                @Html.DropDownListFor(model => model.UserId, (SelectList)ViewBag.LastNames, "-- Seleccione un Paciente --", new { @class = "form-control" })
-            </div>
-            <br />
-            <button type="submit" class="btn btn-danger">Eliminar Evaluaciones</button>
-        }
-
+        </section>
     </div>
-
 </div>
 
 <link href="~/Assets/css/Test.css" rel="stylesheet" />

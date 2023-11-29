@@ -5,48 +5,70 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row justify-content-center">
-    <div class="col-11 mx-auto">
+<br />
+<div class="container">
+    <div class="main-body">
+        <section class="">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="feature-block d-lg-flex justify-content-center">
 
-        <br />
-        <h5>Mis Evaluaciones</h5>
-        <br />
+                            @if (!string.IsNullOrEmpty(ViewBag.ResultMessage))
+                            {
+                                <div class="alert alert-success" role="alert">
+                                    @ViewBag.ResultMessage
+                                </div>
+                            }
 
-        @if (ViewBag.ResultMessage != null)
-        {
-            <div class="alert alert-info" role="alert">
-                @ViewBag.ResultMessage
+                            @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @ViewBag.ErrorMessage
+                                </div>
+                            }
+
+                        <div class="feature-item mb-5 mb-lg-0">
+
+                            <h5>Ver Evaluaciones Asignadas</h5>
+                            @if (ViewBag.FileNames != null && ViewBag.FileNames.Count > 0)
+                            {
+                                <p>Evaluaciones disponibles:</p>
+                                <ul>
+                                    @foreach (var fileName in ViewBag.FileNames)
+                                    {
+                                        <li>@fileName</li>
+                                    }
+                                </ul>
+                            }
+                        </div>
+
+                        <div class="feature-item mb-5 mb-lg-0">
+
+                            <h5>Descargar Evaluación</h5>
+                            @using (Html.BeginForm("DownloadEvaluation", "Test", FormMethod.Get, new { id = "downloadForm" }))
+                            {
+                                @Html.HiddenFor(m => m.UserId)
+
+                                <div>
+                                    <p>Descargue sus evaluaciones:</p>
+                                    <button type="submit" class="btn btn-primary" style="background-color: #3D3372; color: white;" onclick="downloadEvaluation()">Descargar Evaluación</button>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="feature-item mb-5 mb-lg-0">
+                            <h5>Enviar Evaluación</h5>
+                            <p>Si ya realizó su evaluación, proceda a enviarla:</p>
+
+                            @Html.ActionLink("Enviar Evaluación", "SendEvaluation", "Test", null, new { @class = "btn btn-primary", style = "background-color: #1C8C4D; color: white;" })
+                        </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        }
-
-        @if (ViewBag.FileNames != null && ViewBag.FileNames.Count > 0)
-        {
-            <h6>Evaluaciones disponibles:</h6>
-            <ul>
-                @foreach (var fileName in ViewBag.FileNames)
-                {
-                    <li>@fileName</li>
-                }
-            </ul>
-        }
-
-        @using (Html.BeginForm("DownloadEvaluation", "Test", FormMethod.Get, new { id = "downloadForm" }))
-        {
-            @Html.HiddenFor(m => m.UserId)
-
-            <div>
-                <p>Descargue sus evaluaciones:</p>
-                <button type="submit" class="btn btn-primary" style="background-color: #3D3372; color: white;" onclick="downloadEvaluation()">Descargar Evaluación</button>
-            </div>
-        }
-
-        <br />
-        <p>Si ya realizó su evaluación, proceda a enviarla:</p>
-
-        @Html.ActionLink("Enviar Evaluación", "SendEvaluation", "Test", null, new { @class = "btn btn-primary", style = "background-color: #1C8C4D; color: white;" })
-
+        </section>
     </div>
 </div>
-
 
 
