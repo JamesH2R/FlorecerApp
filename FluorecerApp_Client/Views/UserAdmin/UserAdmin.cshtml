@@ -6,7 +6,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+<div class="row justify-content-center">
+    <div class="col-11 mx-auto">
+        <div class="text-md-left mt-3">
+            <button onclick="goBack()" style="color: #4eaac8; text-decoration: none; background: none; border: none;">
+                <i class="fas fa-arrow-left me-2"></i> Regresar
+            </button>
+        </div>
+    </div>
+</div>
 
 <div class="row justify-content-center">
     <div class="col-11 mx-auto">
@@ -31,12 +39,11 @@
         <table class="table table-hover text-center">
             <thead>
                 <tr>
-                    <th class="colored-column">ID</th>
+                   
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Correo Electrónico</th>
                     <th>Estado</th>
-                    <th>Rol ID</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -44,12 +51,11 @@
                 @foreach (var user in Model)
                 {
                     <tr>
-                        <td>@user.UserId</td>
+                       
                         <td>@user.Name</td>
                         <td>@user.LastName</td>
                         <td>@user.Email</td>
                         <td>@user.Status</td>
-                        <td>@user.RoleId</td>
                         <td>
                             @if (user.Status)
                             {

@@ -21,7 +21,7 @@ namespace FluorecerApp_Client.Controllers
         public ActionResult UserConsultation(int? page)
         {
             var pageNumber = page ?? 1;
-            var pageSize = 3;
+            var pageSize = 3; // Número de usuarios por página
 
             var users = model.UserConsultation(pageNumber, pageSize); 
 

@@ -5,6 +5,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="row justify-content-center">
+    <div class="col-11 mx-auto">
+        <div class="text-md-left mt-3">
+            <button onclick="goBack()" style="color: #4eaac8; text-decoration: none; background: none; border: none;">
+                <i class="fas fa-arrow-left me-2"></i> Regresar
+            </button>
+        </div>
+    </div>
+</div>
+
 <br />
 <div class="container">
     <div class="main-body">
@@ -28,41 +38,56 @@
                                 </div>
                             }
 
-                        <div class="feature-item mb-5 mb-lg-0">
+                            <div class="feature-item mb-5 mb-lg-0">
+                                <h5>Ver Evaluaciones Asignadas</h5>
+                                @if (ViewBag.FileNames != null && ViewBag.FileNames.Count > 0)
+                                {
+                                    <p>Evaluaciones disponibles:</p>
+                                    <ul>
+                                        @foreach (var fileName in ViewBag.FileNames)
+                                        {
+                                            <li>@fileName</li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <p>No tiene asignaciones pendientes.</p>
+                                }
+                            </div>
 
-                            <h5>Ver Evaluaciones Asignadas</h5>
-                            @if (ViewBag.FileNames != null && ViewBag.FileNames.Count > 0)
-                            {
-                                <p>Evaluaciones disponibles:</p>
-                                <ul>
-                                    @foreach (var fileName in ViewBag.FileNames)
-                                    {
-                                        <li>@fileName</li>
-                                    }
-                                </ul>
-                            }
-                        </div>
+                            <div class="feature-item mb-5 mb-lg-0">
+                                <h5>Descargar Evaluación</h5>
+                                @if (ViewBag.FileNames != null && ViewBag.FileNames.Count > 0)
+                                {
+                                    <form action="@Url.Action("DownloadEvaluation", "Test")" method="get" id="downloadForm">
+                                        @Html.HiddenFor(m => m.UserId)
+                                        <div>
+                                            <p>Descargue sus evaluaciones asignadas:</p>
+                                            <button type="submit" class="btn btn-primary" style="background-color: #3D3372; color: white;" onclick="downloadEvaluation()">Descargar Evaluación</button>
+                                        </div>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <p>No hay evaluaciones disponibles para descargar.</p>
+                                    <button type="button" class="btn btn-secondary" disabled>Descargar Evaluación</button>
+                                }
+                            </div>
 
-                        <div class="feature-item mb-5 mb-lg-0">
-
-                            <h5>Descargar Evaluación</h5>
-                            @using (Html.BeginForm("DownloadEvaluation", "Test", FormMethod.Get, new { id = "downloadForm" }))
-                            {
-                                @Html.HiddenFor(m => m.UserId)
-
-                                <div>
-                                    <p>Descargue sus evaluaciones:</p>
-                                    <button type="submit" class="btn btn-primary" style="background-color: #3D3372; color: white;" onclick="downloadEvaluation()">Descargar Evaluación</button>
-                                </div>
-                            }
-                        </div>
-
-                        <div class="feature-item mb-5 mb-lg-0">
-                            <h5>Enviar Evaluación</h5>
-                            <p>Si ya realizó su evaluación, proceda a enviarla:</p>
-
-                            @Html.ActionLink("Enviar Evaluación", "SendEvaluation", "Test", null, new { @class = "btn btn-primary", style = "background-color: #1C8C4D; color: white;" })
-                        </div>
+                            <div class="feature-item mb-5 mb-lg-0">
+                                <h5>Enviar Evaluación</h5>
+                                @if (ViewBag.FileNames != null && ViewBag.FileNames.Count > 0)
+                                {
+                                    <p>Si ya realizó su evaluación, envíela:</p>
+                                    @Html.ActionLink("Enviar Evaluación", "SendEvaluation", "Test", null, new { @class = "btn btn-primary", style = "background-color: #1C8C4D; color: white;" })
+                                }
+                                else
+                                {
+                                    <p>No hay evaluaciones disponibles para enviar.</p>
+                                    <button type="button" class="btn btn-secondary" disabled>Enviar Evaluación</button>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -70,5 +95,3 @@
         </section>
     </div>
 </div>
-
-

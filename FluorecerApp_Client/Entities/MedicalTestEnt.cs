@@ -14,7 +14,9 @@ namespace FluorecerApp_Client.Entities
         public string LastName { get; set; }
         public long RoleId { get; set; }
         public string FileName { get; set; }
+        
         public string FilePath { get; set; }
+
         public DateTime Date { get; set; }
     }
 
