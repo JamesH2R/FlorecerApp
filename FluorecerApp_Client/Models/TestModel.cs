@@ -204,7 +204,7 @@ namespace FluorecerApp_Client.Models
                     }
                     else
                     {
-                        return "No se pudo descargar la evaluación.";
+                        return "Evaluación descargada anteriormente. Revise sus descargas.";
                     }
                 }
             }

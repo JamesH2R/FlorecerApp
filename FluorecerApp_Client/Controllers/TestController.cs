@@ -58,9 +58,10 @@ namespace FluorecerApp_Client.Controllers
                 var selectedUser = await model.GetUserById(selectedUserId);
                 if (selectedUser != null)
                 {
-                    // Asignar el UserId y LastName al objeto MedicalTestsEnt
+                    // Asignar el UserId, LastName y Name al objeto MedicalTestsEnt
                     test.UserId = selectedUser.UserId;
                     test.LastName = selectedUser.LastName;
+                    test.Name = selectedUser.Name;
                 }
 
                 var result = await model.AssignEvaluation(test, file.InputStream, file.FileName);
@@ -87,7 +88,7 @@ namespace FluorecerApp_Client.Controllers
         {
             try
             {
-               var selectedUserId = test.UserId;
+                var selectedUserId = test.UserId;
 
                 var selectedUser = await model.GetUserById(selectedUserId);
                 if (selectedUser != null)
