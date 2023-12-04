@@ -23,7 +23,7 @@ namespace FluorecerApp_Client.Controllers
             var pageNumber = page ?? 1;
             var pageSize = 3; // Número de usuarios por página
 
-            var users = model.UserConsultation(pageNumber, pageSize); 
+            var users = model.UserConsultation(pageNumber, pageSize);
 
             var pagedUsers = users.ToPagedList(pageNumber, pageSize);
             return View("~/Views/UserAdmin/UserAdmin.cshtml", pagedUsers);
@@ -33,6 +33,13 @@ namespace FluorecerApp_Client.Controllers
         public async Task<ActionResult> InactivateUser(int userId)
         {
             var result = await model.InactivateUser(userId);
+            return Content(result, "text/html");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ActivateUser(int userId)
+        {
+            var result = await model.ActivateUser(userId);
             return Content(result, "text/html");
         }
 

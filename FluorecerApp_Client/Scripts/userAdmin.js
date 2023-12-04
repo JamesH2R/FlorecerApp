@@ -21,6 +21,30 @@
     }
 }
 
+function activateUser(userId) {
+    if (confirm("¿Está seguro de que desea activar este usuario?")) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", '/UserAdmin/ActivateUser', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var data = xhr.responseText;
+                if (data === "Usuario activado con éxito") {
+                    alert(data);
+                    location.reload();
+                } else {
+                    alert("Error al activar el usuario");
+                }
+            } else if (xhr.readyState === 4 && xhr.status !== 200) {
+                alert("Ocurrió un error al realizar la solicitud");
+            }
+        };
+        var data = JSON.stringify({ userId: userId });
+        xhr.send(data);
+    }
+}
+
+
 function searchUsers() {
     var searchTerm = $('#searchTerm').val();
     window.location.href = '/UserAdmin/SearchUsers?searchTerm=' + searchTerm;

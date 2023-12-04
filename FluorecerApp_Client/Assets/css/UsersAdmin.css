@@ -17,22 +17,6 @@
     }
 
 
-/* Estilos para el botón con icono */
-.icon-button {
-    background-color: red;
-    border: 1px solid red;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: inherit;
-    color: white;
-    display: inline-block;
-}
-
-.icon-red {
-    color: white;
-}
-
 /* Estilos para la paginación */
 .pagination {
     display: flex;
