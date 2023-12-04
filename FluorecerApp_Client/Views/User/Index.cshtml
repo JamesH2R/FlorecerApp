@@ -15,8 +15,11 @@
                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                             <div class="mt-3">
                                 <h4>@Model.Name @Model.LastName</h4>
-                                <p class="text-secondary mb-1">Perfil Paciente</p>
-                                <p class="text-muted font-size-sm">Dirección</p>
+                                @if (Session["RoleName"].Equals("Admin"))
+            {
+<p class="text-secondary mb-1">Administrador</p>
+            } else { <p class="text-secondary mb-1">Paciente</p> }
+                                
 
                                 @Html.ActionLink("Editar Perfil", "Profile", "User", null, new { @class = "btn btn-main btn-round-full" })
                             </div>
@@ -51,7 +54,7 @@
                                 <h6 class="mb-0">Celular</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                88888888
+                                @Model.Phone
                             </div>
                         </div>
                         <hr>
@@ -60,7 +63,7 @@
                                 <h6 class="mb-0">Dirección</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                San José
+                                @Model.Address
                             </div>
                         </div>
                         <hr>
@@ -84,7 +87,7 @@
                                     <span>Usuarios</span>
                                     <h4 class="mb-3">Administrar Usuarios</h4>
                                     <p class="mb-4">Administre a todos los usuarios registrados en el sistema.</p>
-                                    @Html.ActionLink("Ver usuarios", "UserConsultation", "UserAdmin", null, new { @class = "btn btn-main btn-round-full" })
+                                    @Html.ActionLink("Ver usuarios", "UserConsultation", "UserAdmin", null, new { @class = "btn btn-main btn-round-full d-flex justify-content-center" })
                                 </div>
                                 <div class="feature-item mb-5 mb-lg-0">
                                     <div class="feature-icon mb-4">
@@ -93,7 +96,7 @@
                                     <span>Asignaciones</span>
                                     <h4 class="mb-3">Asignar Evaluación</h4>
                                     <p class="mb-4">Asigne las evaluaciones psicopedagogas que requiera el cliente.</p>
-                                    @Html.ActionLink("Asignar", "Assign", "Test", null, new { @class = "btn btn-main btn-round-full" })
+                                    @Html.ActionLink("Asignar", "Assign", "Test", null, new { @class = "btn btn-main btn-round-full d-flex justify-content-center" })
                                 </div>
                                 <div class="feature-item mb-5 mb-lg-0">
                                     <div class="feature-icon mb-4">
@@ -102,7 +105,7 @@
                                     <span>Evaluaciones</span>
                                     <h4 class="mb-3">Descargar Evaluaciones</h4>
                                     <p class="mb-4">Descargue las evaluaciones que han realizado los pacientes.</p>
-                                    @Html.ActionLink("Ver Pruebas de Usuarios", "TestUsersDone", "Test", null, new { @class = "btn btn-main btn-round-full" })
+                                    @Html.ActionLink("Ver Pruebas de Usuarios", "TestUsersDone", "Test", null, new { @class = "btn btn-main btn-round-full d-flex justify-content-center" })
                                 </div>
                             }
 
@@ -115,7 +118,7 @@
                                     <span>Servicios</span>
                                     <h4 class="mb-3">Cita en línea</h4>
                                     <p class="mb-4">Obtén una cita con nosotros desde la comodidad de tu casa.</p>
-                                    @Html.ActionLink("Reservar Cita", "Index", "Appointment", null, new { @class = "btn btn-main btn-round-full" })
+                                    @Html.ActionLink("Reservar Cita", "Index", "Appointment", null, new { @class = "btn btn-main btn-round-full d-flex justify-content-center" })
                                 </div>
                                 <div class="feature-item mb-5 mb-lg-0">
                                     <div class="feature-icon mb-4">
@@ -124,7 +127,7 @@
                                     <span>Asignaciones</span>
                                     <h4 class="mb-3">Mis Evaluaciones</h4>
                                     <p class="mb-4">Visualice sus evaluaciones. O bien, realice el envío de las mismas.</p>
-                                    @Html.ActionLink("Ver evaluaciones", "TestUsers", "Test", null, new { @class = "btn btn-main btn-round-full" })
+                                    @Html.ActionLink("Ver evaluaciones", "TestUsers", "Test", null, new { @class = "btn btn-main btn-round-full d-flex justify-content-center" })
                                 </div>
                                 <div class="feature-item mb-5 mb-lg-0">
                                     <div class="feature-icon mb-4">

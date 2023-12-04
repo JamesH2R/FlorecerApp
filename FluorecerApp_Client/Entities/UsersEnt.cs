@@ -23,6 +23,12 @@ namespace FluorecerApp_Client.Entities
         [Required(ErrorMessage = "El campo contraseña es obligatorio.")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "El campo celular es obligatorio.")]
+        public string Phone { get; set; }
+
+        [Required(ErrorMessage = "El campo dirección es obligatorio.")]
+        public string Address { get; set; }
+
         public long RoleId { get; set; }
 
         public string RoleName { get; set; }

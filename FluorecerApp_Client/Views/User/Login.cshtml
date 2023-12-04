@@ -24,6 +24,10 @@
                 {
                     <p class="text-danger">@TempData["ErrorMessage"]</p>
                 }
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <p class="text-success">@TempData["SuccessMessage"]</p>
+                }
             </div>
             <p class="small">
                 @Html.ActionLink("¿Olvidaste tu contraseña?", "PasswordRecovery", "User", null, new { @class = "login_titles fw-bold links" })

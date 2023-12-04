@@ -22,8 +22,18 @@
             </div>
             <div class="mb-3">
                 <label for="inputEmail" class="form-label">Correo electrónico</label>
-                @Html.TextBoxFor(model => model.Email, new { @class = "form-control border_forms", id = "inputEmail", @type = "email"})
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control border_forms", id = "inputEmail", @type = "email" })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger fs-6" })
+            </div>
+            <div class="mb-3">
+                <label for="inputEmail" class="form-label">Dirección</label>
+                @Html.TextBoxFor(model => model.Address, new { @class = "form-control border_forms", id = "inputAddress", @type = "text" })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger fs-6" })
+            </div>
+            <div class="mb-3">
+                <label for="inputEmail" class="form-label">Celular</label>
+                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control border_forms", id = "inputPhone", @type = "text" })
+                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger fs-6" })
             </div>
             <div class="mb-3">
                 <label for="inputPassword" class="form-label">Contraseña</label>

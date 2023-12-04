@@ -34,7 +34,7 @@
                             <span>Servicios</span>
                             <h4 class="mb-3">Cita en línea</h4>
                             <p class="mb-4">Obtén una cita con nuestros profesionales. Hemos hecho su vida más fácil con nuestros servicios.</p>
-                            <a href="appoinment.html" class="btn btn-main btn-round-full">Reserva una cita</a>
+                            @Html.ActionLink("Reserva una cita", "Index", "Appointment", null, new { @class = "btn btn-main btn-round-full" })
                         </div>
 
                         <div class="feature-item mb-5 mb-lg-0">

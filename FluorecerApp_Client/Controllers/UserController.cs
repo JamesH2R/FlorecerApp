@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using FluorecerApp_Client.Entities;
 using System.Net.Http.Headers;
 using FluorecerApp_Client.Models;
+using System.Net.Sockets;
+using System.Net;
 
 namespace FluorecerApp_Client.Controllers
 {
@@ -30,6 +32,8 @@ namespace FluorecerApp_Client.Controllers
                 string lastname = Session["Lastname"] as string;
                 string email = Session["Email"] as string;
                 string name = Session["Name"] as string;
+                string phone = Session["Phone"] as string;
+                string address = Session["Address"] as string;
 
                 // Crea un objeto para representar al usuario
                 var user = new UsersEnt
@@ -38,6 +42,8 @@ namespace FluorecerApp_Client.Controllers
                     Name = name,
                     LastName = lastname,
                     Email = email,
+                    Phone = phone,
+                    Address = address,
                 };
 
                 return View(user);
@@ -77,22 +83,29 @@ namespace FluorecerApp_Client.Controllers
                         Session["UserId"] = result.UserId;
                         Session["Email"] = result.Email;
                         Session["NameLastName"] = result.LastName;
-                        Session["RoleId"] = result.RoleId;
                         Session["Token"] = result.Token;
                         Session["RoleName"] = result.RoleName;
                         Session["Name"] = result.Name;
-                        Session["Lastname"] = result.LastName;
                         Session["Email"] = result.Email;
                         Session["UserId"] = result.UserId;
+                        Session["Phone"] = result.Phone;
+                        Session["Address"] = result.Address;
+                        
 
                         // Redirects to Index (client or admin) after authentication
                         return RedirectToAction("Index", "User");
                     }
                     else
                     {
-                        // Handle error
-                        Console.WriteLine("Error al iniciar sesión. Código de estado: " + response?.StatusCode);
-                        TempData["ErrorMessage"] = "Credenciales incorrectas. Por favor, inténtalo nuevamente.";
+                        if (response.StatusCode == HttpStatusCode.Unauthorized)
+                        {
+                            TempData["ErrorMessage"] = "El usuario está inactivo. Por favor, contacta al administrador.";
+                        } else
+                        {
+                            Console.WriteLine("Error al iniciar sesión. Código de estado: " + response?.StatusCode);
+                            TempData["ErrorMessage"] = "Credenciales incorrectas. Por favor, inténtalo nuevamente.";
+                        }
+                        
                         return View("Login", entidad);
                     }
                 }
@@ -137,8 +150,8 @@ namespace FluorecerApp_Client.Controllers
                         if (response.IsSuccessStatusCode)
                         {
                             // Registration successful
-                            TempData["SuccessMessage"] = "Registro exitoso.";
-                            return RedirectToAction("Login", entidad);
+                            TempData["SuccessMessage"] = "Registro exitoso. Proceda a iniciar sesión";
+                            return RedirectToAction("Login");
                         }
                         else
                         {

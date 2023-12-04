@@ -34,6 +34,12 @@
                         <li class="active">
                             @Html.ActionLink("Inicio", "Index", "Home")
                         </li>
+                        @if (Session["RoleName"] != null)
+                        {
+                            <li class="">
+                                @Html.ActionLink("Mi Cuenta", "Index", "User")
+                            </li>
+                        }
                         <li class="">
                             <a href="#about">Acerca de</a>
                         </li>
