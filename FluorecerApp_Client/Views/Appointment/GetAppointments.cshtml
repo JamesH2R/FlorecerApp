@@ -1,0 +1,32 @@
+﻿@model IEnumerable<FluorecerApp_Client.Entities.AppointmentsEnt>
+
+@{
+    ViewBag.Title = "GetAppointments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model.Any())
+{
+    <div class="row">
+        @foreach (var appointment in Model)
+        {
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Cita</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Fecha: @appointment.Date.ToString("dd-MM-yyyy")</h6>
+                        <p class="card-text">Hora: @appointment.Hour</p>
+                        @* Si deseas un enlace para cancelar la cita *@
+                        <a href="@Url.Action("CancelarCita", "Appointment", new { appointmentId = appointment.AppointmentId })" class="btn btn-danger">Cancelar cita</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No hay citas disponibles.</p>
+}
+
+

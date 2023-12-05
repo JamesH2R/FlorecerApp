@@ -5,9 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.NetworkInformation;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace FluorecerApp_Client.Controllers
 {
@@ -48,25 +51,28 @@ namespace FluorecerApp_Client.Controllers
         {
             try
             {
-                //var userId = ObtenerIdDeUsuarioActual();
+                var userId = Session["UserId"];
 
                 using (HttpClient client = new HttpClient())
                 {
-                    string apiUrl = apiBaseUrl + $"api/SetAppointment/{appointmentId}";
+                    string apiUrl = apiBaseUrl + $"api/SetAppointment/{appointmentId}?userId={userId}";
 
                     HttpResponseMessage response = await client.PostAsync(apiUrl, null);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        TempData["SuccessMessage"] = "Cita reservada exitosamente.";
-                        return RedirectToAction("Index", "User");
+                        ViewBag.ReservaExitosa = true;
+                        return RedirectToAction("Index", "Appointment");
                     }
                     else
                     {
                         TempData["ErrorMessage"] = "Error al reservar la cita. Por favor, inténtalo de nuevo.";
+                        ViewBag.ReservaExitosa = false;
                         return RedirectToAction("Index", "User");
                     }
                 }
+
+                
             }
             catch (Exception ex)
             {
@@ -75,8 +81,40 @@ namespace FluorecerApp_Client.Controllers
             }
         }
 
+        public async Task<ActionResult> GetAppointments()
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    var userId = Session["UserId"];
+                    string apiUrl = apiBaseUrl + $"api/AppointmentsByUserId/{userId}";
+
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseContent = await response.Content.ReadAsStringAsync();
+                        var appointments = JsonConvert.DeserializeObject<List<AppointmentsEnt>>(responseContent);
+                        return View(appointments);
+                    }
+                    else
+                    {
+                        // Manejar el caso en que la solicitud no fue exitosa
+                        TempData["ErrorMessage"] = "Error al obtener las citas por userId.";
+                        return RedirectToAction("Index", "User");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Error al obtener las citas por userId: " + ex.Message;
+                return RedirectToAction("Index", "User");
+            }
+        }
+        }
+
 
 
 
     }
-}

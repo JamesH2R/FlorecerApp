@@ -282,6 +282,7 @@
     <Content Include="Views\Test\SendTest.cshtml" />
     <Content Include="Views\Test\TestUsers.cshtml" />
     <Content Include="Views\Test\TestUsersDone.cshtml" />
+    <Content Include="Views\Appointment\GetAppointments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

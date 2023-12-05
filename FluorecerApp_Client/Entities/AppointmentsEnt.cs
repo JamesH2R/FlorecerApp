@@ -8,7 +8,7 @@ namespace FluorecerApp_Client.Entities
 {
     public class AppointmentsEnt
     {
-        public long AppoimentId { get; set; }
+        public long AppointmentId { get; set; }
 
         public DateTime Date { get; set; }
 
