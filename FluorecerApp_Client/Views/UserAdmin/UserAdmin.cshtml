@@ -61,14 +61,30 @@
                         <td>@user.Name</td>
                         <td>@user.LastName</td>
                         <td>@user.Email</td>
-                        <td>@user.Status</td>
+
+                        @if (@user.Status)
+                        {
+                            <td>Activo</td>
+                        }
+                        else
+                        {
+                            <td>Inactivo</td>
+                        }
                         <td>
+
                             @if (user.Status)
                             {
-                                <button onclick="inactivateUser(@user.UserId)" class="icon-button">
-                                    <i class="fas fa-ban"></i>
+                                <button onclick="inactivateUser(@user.UserId)" class="btn btn-danger">
+                                    Inactivar
                                 </button>
                             }
+                            else
+                            {
+                                <button onclick="activateUser(@user.UserId)" class="btn btn-success">
+                                    Activar
+                                </button>
+                            }
+
                         </td>
                     </tr>
                 }

@@ -54,6 +54,25 @@ namespace FluorecerApp_Client.Models
             }
         }
 
+        public async Task<string> ActivateUser(int userId)
+        {
+            using (var client = new HttpClient())
+            {
+                //string token = HttpContext.Current.Session["Token"].ToString();
+                string url = ConfigurationManager.AppSettings["urlApi"].ToString() + $"api/ActivateUser/{userId}";
+
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage resp = await client.PutAsync(url, null);
+
+                if (resp.IsSuccessStatusCode)
+                {
+                    return "Usuario activado con éxito";
+                }
+
+                return "No se pudo activar al usuario";
+            }
+        }
+
         public List<UsersEnt> SearchUsers(string searchTerm)
         {
             using (var client = new HttpClient())
