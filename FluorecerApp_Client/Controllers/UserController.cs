@@ -223,15 +223,18 @@ namespace FluorecerApp_Client.Controllers
         {
             // Obtén el UserId de la sesión
             long userId = (long)Session["UserId"];
-
-
             entidad.UserId = userId;
 
             var resp = model.EditUser(entidad);
 
-            if (resp > 0)
+            if (resp == 1)
             {
                 return RedirectToAction("Index", "User");
+            }
+            else if (resp == 2)
+            {
+                ViewBag.MsjPantalla = "El correo electrónico ya está en uso. Intente con uno distinto.";
+                return View("Profile");
             }
             else
             {
