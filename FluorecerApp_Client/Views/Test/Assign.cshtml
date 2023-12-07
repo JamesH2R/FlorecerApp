@@ -50,11 +50,10 @@
                     <div class="col-lg-12">
                         <div class="feature-block d-lg-flex justify-content-center">
 
-
                             <div class="feature-item mb-5 mb-lg-0">
 
                                 <h5>Asignar Evaluación</h5>
-                                @using (Html.BeginForm("AssignEvaluation", "Test", FormMethod.Post, new { enctype = "multipart/form-data", id = "assignForm", onsubmit = "submitForm(event)" }))
+                                @using (Html.BeginForm("AssignEvaluation", "Test", FormMethod.Post, new { enctype = "multipart/form-data", id = "assignForm" }))
                                 {
                                     <p>Ingrese los datos requeridos para asignar la evaluación</p>
 
@@ -63,12 +62,8 @@
                                     </div>
                                     <br>
                                     <div class="form-group">
-                                        @Html.TextBoxFor(m => m.FileName, new { @type = "text", @class = "form-control", required = "required", id = "fileName", placeholder = "Nombre del archivo" })
-                                    </div>
-                                    <br>
-                                    <div class="form-group">
-                                        <label for="FilePath">Archivo:</label>
-                                        <input type="file" name="file" id="file" class="form-control custom-file-input" required />
+                                        <label for="file">Archivo:</label>
+                                        <input type="file" name="file" class="form-control custom-file-input" required />
                                     </div>
                                     <br>
                                     <button type="submit" class="btn btn-primary" style="background-color: #3D3372; color: white;">Asignar</button>

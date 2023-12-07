@@ -28,7 +28,12 @@ namespace FluorecerApp_Client.Models
                     multiContent.Add(jsonContent, "test");
 
                     StreamContent fileContent = new StreamContent(fileStream);
-                    multiContent.Add(fileContent, "file", fileName);
+                    fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+                    {
+                        Name = "\"file\"",
+                        FileName = "\"" + fileName + "\""
+                    };
+                    multiContent.Add(fileContent);
 
                     string url = ConfigurationManager.AppSettings["urlApi"].ToString() + "api/AssignEvaluation";
 
@@ -43,7 +48,6 @@ namespace FluorecerApp_Client.Models
                     {
                         return "No se pudo asignar la evaluación.";
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -141,8 +145,7 @@ namespace FluorecerApp_Client.Models
         {
             using (var client = new HttpClient())
             {
-
-                string url = ConfigurationManager.AppSettings["urlApi"].ToString() + "api/GetAllPdfFileNames";
+                string url = ConfigurationManager.AppSettings["urlApi"].ToString() + "api/GetAllFileNames";
 
                 HttpResponseMessage resp = client.GetAsync(url).Result;
 
@@ -154,6 +157,7 @@ namespace FluorecerApp_Client.Models
                 return new List<TestResultsEnt>();
             }
         }
+
         public async Task<string> DownloadTestResult(long ResultId)
         {
             try
@@ -183,6 +187,35 @@ namespace FluorecerApp_Client.Models
             }
         }
 
+        public async Task<string> DeleteTestResult(long ResultId)
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    // URL del API
+                    string url = ConfigurationManager.AppSettings["urlApi"].ToString() + $"api/DeleteTestResult/{ResultId}";
+
+                    // Llamada a la API y manejo de la respuesta
+                    HttpResponseMessage response = await client.DeleteAsync(url);
+                    string responseString = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return "Evaluación eliminada con éxito.";
+                    }
+                    else
+                    {
+                        return "No se pudo eliminar la evaluación.";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return $"Error al eliminar las evaluaciones: {ex.Message}";
+                }
+            }
+
+        }
 
         //USUARIOS
         public async Task<string> DownloadEvaluation(long userId)

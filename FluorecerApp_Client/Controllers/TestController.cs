@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Threading.Tasks;
 using System.Reflection;
 using static System.Net.Mime.MediaTypeNames;
+using System.Net.Http;
 
 namespace FluorecerApp_Client.Controllers
 {
@@ -64,6 +65,7 @@ namespace FluorecerApp_Client.Controllers
                     test.Name = selectedUser.Name;
                 }
 
+                // Utilizar el método AssignEvaluation del modelo
                 var result = await model.AssignEvaluation(test, file.InputStream, file.FileName);
                 ViewBag.ResultMessage = result;
 
@@ -71,14 +73,15 @@ namespace FluorecerApp_Client.Controllers
                 TempData["PostEjecutado"] = true;
 
             }
-
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = "Ocurrió un error al intentar asignar la evaluación: " + ex.Message;
                 return View("~/Views/Shared/Error.cshtml");
             }
 
-            ViewBag.ResultMessage = "Evaluación asignada con éxito"; TempData["ResultMessage"] = ViewBag.ResultMessage; // Guardar en TempData
+            ViewBag.ResultMessage = "Evaluación asignada con éxito";
+            TempData["ResultMessage"] = ViewBag.ResultMessage; // Guardar en TempData
+
             // Redireccionar al método GET "Assign" del controlador "Test"
             return RedirectToAction("Assign", "Test");
         }
@@ -119,10 +122,11 @@ namespace FluorecerApp_Client.Controllers
         [HttpGet]
         public ActionResult TestUsersDone()
         {
+            ViewBag.ResultMessage = TempData["ResultMessage"] as string;
             var resp = model.TestUsersDone();
             return View(resp);
         }
-
+       
         [HttpGet]
         public async Task<ActionResult> DownloadTestResult(long ResultId)
         {
@@ -154,9 +158,33 @@ namespace FluorecerApp_Client.Controllers
 
         private string GetFileNameForResultId(long resultId)
         {
-
-            return $"{resultId}.pdf";
+            return $"{resultId}.zip";
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteTestResult(long ResultId)
+        {
+            try
+            {
+                // Llamar al método DeleteTestResult que realiza la eliminación en el API
+                var resultMessage = await model.DeleteTestResult(ResultId);
+
+                ViewBag.ResultMessage = resultMessage;
+
+                // Puedes agregar un TempData para llevar el mensaje a la acción TestUsersDone
+                TempData["ResultMessage"] = resultMessage;
+
+                return RedirectToAction("TestUsersDone", "Test");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = $"Ocurrió un error al intentar eliminar las evaluaciones: {ex.Message}";
+                return View("~/Views/Shared/Error.cshtml");
+            }
+        }
+
+
 
 
         //USUARIOS

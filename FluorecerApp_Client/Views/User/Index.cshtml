@@ -91,11 +91,11 @@
                                 </div>
                                 <div class="feature-item mb-5 mb-lg-0">
                                     <div class="feature-icon mb-4">
-                                        <i class="fas fa-user-edit"></i>
+                                        <i class="fas fa-calendar"></i>
                                     </div>
                                     <span>Citas</span>
-                                    <h4 class="mb-3">Administrar Citas</h4>
-                                    <p class="mb-4">Administre las citas de su consultorio.</p>
+                                    <h4 class="mb-4">Administrar Citas</h4>
+                                    <p class="mb-5">Administre las citas de su consultorio respecto a su disponibilidad.</p>
                                     @Html.ActionLink("Citas", "AppointmentList", "AppointmentAdmin", null, new { @class = "btn btn-main btn-round-full d-flex justify-content-center" })
                                 </div>
                                 <div class="feature-item mb-5 mb-lg-0">
@@ -103,8 +103,8 @@
                                         <i class="fas fa-clipboard-check"></i>
                                     </div>
                                     <span>Asignaciones</span>
-                                    <h4 class="mb-3">Asignar Evaluación</h4>
-                                    <p class="mb-4">Asigne las evaluaciones psicopedagogas que requiera el cliente.</p>
+                                    <h4 class="mb-4">Asignar Evaluación</h4>
+                                    <p class="mb-5">Asigne las evaluaciones psicopedagogas que requiera el cliente.</p>
                                     @Html.ActionLink("Asignar", "Assign", "Test", null, new { @class = "btn btn-main btn-round-full d-flex justify-content-center" })
                                 </div>
                                 <div class="feature-item mb-5 mb-lg-0">
@@ -114,7 +114,7 @@
                                     <span>Evaluaciones</span>
                                     <h4 class="mb-3">Descargar Evaluaciones</h4>
                                     <p class="mb-4">Descargue las evaluaciones que han realizado los pacientes.</p>
-                                    @Html.ActionLink("Ver Pruebas de Usuarios", "TestUsersDone", "Test", null, new { @class = "btn btn-main btn-round-full d-flex justify-content-center" })
+                                    @Html.ActionLink("Ver Pruebas", "TestUsersDone", "Test", null, new { @class = "btn btn-main btn-round-full d-flex justify-content-center" })
                                 </div>
                             }
 
@@ -122,7 +122,7 @@
                             {
                                 <div class="feature-item mb-5 mb-lg-0">
                                     <div class="feature-icon mb-4">
-                                        <i class="fa-solid fa-wifi"></i>
+                                        <i class="fas fa-calendar"></i>
                                     </div>
                                     <span>Servicios</span>
                                     <h4 class="mb-3">Cita en línea</h4>
@@ -131,11 +131,11 @@
                                 </div>
                                 <div class="feature-item mb-5 mb-lg-0">
                                     <div class="feature-icon mb-4">
-                                        <i class="fa-solid fa-wifi"></i>
+                                        <i class="fas fa-star"></i>
                                     </div>
                                     <span>Servicios</span>
-                                    <h4 class="mb-3">Citas</h4>
-                                    <p class="mb-4">Visualiza las citas con tu pedagoga.</p>
+                                    <h4 class="mb-3">Mis Citas</h4>
+                                    <p class="mb-5">Visualiza las citas que reservaste con tu psicopedagoga.</p>
                                     @Html.ActionLink("Mis citas", "GetAppointments", "Appointment", null, new { @class = "btn btn-main btn-round-full d-flex justify-content-center" })
                                 </div>
                                 <div class="feature-item mb-5 mb-lg-0">

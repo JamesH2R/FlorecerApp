@@ -23,30 +23,41 @@
             <table class="table table-hover text-center">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
                         <th>Correo Electrónico</th>
                         <th>Estado</th>
-                        <th>Rol ID</th>
-                        <th>Inactivar</th>
+                        <th>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var user in Model)
                     {
                         <tr>
-                            <td>@user.UserId</td>
+
                             <td>@user.Name</td>
                             <td>@user.LastName</td>
                             <td>@user.Email</td>
-                            <td>@user.Status</td>
-                            <td>@user.RoleId</td>
+
+                            @if (@user.Status)
+                            {
+                                <td>Activo</td>
+                            }
+                            else
+                            {
+                                <td>Inactivo</td>
+                            }
                             <td>
                                 @if (user.Status)
                                 {
-                                    <button onclick="inactivateUser(@user.UserId)" class="icon-button">
-                                        <i class="fas fa-ban"></i>
+                                    <button onclick="inactivateUser(@user.UserId)" class="btn btn-danger">
+                                        Inactivar
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button onclick="activateUser(@user.UserId)" class="btn btn-success">
+                                        Activar
                                     </button>
                                 }
                             </td>
