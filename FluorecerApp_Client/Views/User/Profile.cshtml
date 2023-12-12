@@ -27,6 +27,7 @@
                     <th>Apellidos</th>
                     <th>Email</th>
                     <th>Edita tu información</th>
+                    <th>Edita tu Contraseña</th>
                 </tr>
             <thead>
             <tbody>
@@ -40,6 +41,11 @@
                         <a href="@Url.Action("EditProfile", "User", new { q = Session["IdUsers"] })" class="boton-profile-edit">Editar información</a>
 
                     </td>
+
+                    <td>
+                        <a href="@Url.Action("ChangePassword", "User", new { q = Session["IdUsers"] })" class="boton-profile-edit">Editar tu contraseña</a>
+                    </td>
+
                 </tr>
 
             </tbody>

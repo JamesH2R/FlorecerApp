@@ -72,13 +72,14 @@
                                 <h5>Descargar Evaluación</h5>
                                 @if (ViewBag.FileNames != null && ViewBag.FileNames.Count > 0)
                                 {
-                                    <form action="@Url.Action("DownloadEvaluation", "Test")" method="get" id="downloadForm">
-                                        @Html.HiddenFor(m => m.UserId)
-                                        <div>
-                                            <p>Descargue sus evaluaciones asignadas:</p>
-                                            <button type="submit" class="btn btn-primary" style="background-color: #3D3372; color: white;" onclick="downloadEvaluation()">Descargar Evaluación</button>
-                                        </div>
-                                    </form>
+                                    using (Html.BeginForm("DownloadEvaluation", "Test", FormMethod.Post))
+                                    {
+                                        <p>Descargue sus evaluaciones asignadas:</p>
+                                        @Html.DropDownListFor(model => model.SelectedTestId, (SelectList)ViewBag.Evaluations, "Seleccione una evaluación")
+                                        <br><br>
+                                        <button type="submit" class="btn btn-primary" style="background-color: #3D3372; color: white;">Descargar Evaluación</button>
+                                    }
+
                                 }
                                 else
                                 {
@@ -107,3 +108,16 @@
         </section>
     </div>
 </div>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Este código se ejecutará cuando la página se haya cargado completamente
+            $("#SelectedTestId").change(function () {
+                var selectedTestId = $(this).val();
+                $("#HiddenTestId").val(selectedTestId);
+            });
+        });
+    </script>
+}

@@ -145,6 +145,46 @@ namespace FluorecerApp_Client.Models
             }
         }
 
+        public bool PasswordRecovery(UsersEnt entidad)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = ConfigurationManager.AppSettings["urlApi"].ToString() + "api/RecoverKey";
+                JsonContent body = JsonContent.Create(entidad); //Serializar
+                HttpResponseMessage resp = client.PostAsync(url, body).Result;
+
+                if (resp.IsSuccessStatusCode)
+                {
+                    return resp.Content.ReadFromJsonAsync<bool>().Result;
+                }
+
+                return false;
+            }
+        }
+
+
+        public int ChangePassword(UsersEnt entidad)
+        {
+            using (var client = new HttpClient())
+            {
+
+
+                string token = HttpContext.Current.Session["Token"].ToString();
+                string url = ConfigurationManager.AppSettings["urlApi"].ToString() + "api/ChangePassword";
+                JsonContent body = JsonContent.Create(entidad); //Serializar
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage resp = client.PutAsync(url, body).Result;
+
+                if (resp.IsSuccessStatusCode)
+                {
+                    return resp.Content.ReadFromJsonAsync<int>().Result;
+                }
+
+                return 0;
+            }
+        }
+
 
     }
 }

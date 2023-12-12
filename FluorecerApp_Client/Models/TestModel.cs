@@ -1,8 +1,10 @@
 ﻿using FluorecerApp_Client.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -158,7 +160,7 @@ namespace FluorecerApp_Client.Models
             }
         }
 
-        public async Task<string> DownloadTestResult(long ResultId)
+        public async Task<HttpResponseMessage> DownloadTestResult(long ResultId)
         {
             try
             {
@@ -169,21 +171,14 @@ namespace FluorecerApp_Client.Models
 
                     // Llamada a la API y manejo de la respuesta
                     HttpResponseMessage response = await client.GetAsync(url);
-                    string responseString = await response.Content.ReadAsStringAsync();
 
-                    if (response.IsSuccessStatusCode)
-                    {
-                        return "Evaluación descargada con éxito.";
-                    }
-                    else
-                    {
-                        return "No se pudo descargar la evaluación.";
-                    }
+                    return response;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return $"Error al descargar la evaluación: {ex.Message}";
+                // Manejar la excepción según tus necesidades
+                throw;
             }
         }
 
@@ -218,32 +213,59 @@ namespace FluorecerApp_Client.Models
         }
 
         //USUARIOS
-        public async Task<string> DownloadEvaluation(long userId)
+
+        public async Task<List<MedicalTestsEnt>> GetUserEvaluations(long userId)
         {
             try
             {
                 using (var client = new HttpClient())
                 {
                     // URL del API
-                    string url = ConfigurationManager.AppSettings["urlApi"].ToString() + "api/DownloadEvaluation/" + userId;
+                    string url = ConfigurationManager.AppSettings["urlApi"].ToString() + $"api/GetUserEvaluations/{userId}";
 
                     // Llamada a la API y manejo de la respuesta
                     HttpResponseMessage response = await client.GetAsync(url);
-                    string responseString = await response.Content.ReadAsStringAsync();
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return "Evaluación descargada con éxito.";
+                        // Deserializar la respuesta del API
+                        var responseString = await response.Content.ReadAsStringAsync();
+                        var evaluations = JsonConvert.DeserializeObject<List<MedicalTestsEnt>>(responseString);
+                        return evaluations;
                     }
                     else
                     {
-                        return "Evaluación descargada anteriormente. Revise sus descargas.";
+                        // Manejar el error según tus necesidades
+                        throw new Exception($"Error al obtener las evaluaciones: {response.ReasonPhrase}");
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return $"Error al descargar la evaluación: {ex.Message}";
+                // Manejar la excepción según tus necesidades
+                throw;
+            }
+        }
+
+        public async Task<HttpResponseMessage> DownloadEvaluation(long userId, long selectedTestId)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    // URL del API para descargar la evaluación
+                    string url = ConfigurationManager.AppSettings["urlApi"].ToString() + $"api/DownloadEvaluation/{userId}/{selectedTestId}";
+
+                    // Realizar la llamada a la API y manejar la respuesta
+                    HttpResponseMessage response = await client.PostAsync(url, null);
+
+                    return response;
+                }
+            }
+            catch (Exception)
+            {
+                // Manejar la excepción según tus necesidades
+                throw;
             }
         }
 

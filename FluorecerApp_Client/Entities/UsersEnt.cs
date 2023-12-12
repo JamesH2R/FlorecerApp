@@ -36,5 +36,10 @@ namespace FluorecerApp_Client.Entities
         public string Token { get; set; }
 
         public bool Status { get; set; }
+
+        public string NewPassword { get; set; }
+
+
+        public string ConfirmNewPassword { get; set; }
     }
 }

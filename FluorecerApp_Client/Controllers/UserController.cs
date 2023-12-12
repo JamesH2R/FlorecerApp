@@ -255,6 +255,65 @@ namespace FluorecerApp_Client.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult Recovery()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult PasswordRecovery(UsersEnt entidad)
+        {
+            var resp = model.PasswordRecovery(entidad);
+
+            if (resp)
+                return RedirectToAction("Login", "User");
+            else
+            {
+                ViewBag.MsjPantalla = "No se ha podido recuperar su acceso";
+                return View("Recovery");
+            }
+
+        }
+
+
+        [HttpGet]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(UsersEnt entidad, LoginEnt entidad2)
+        {
+            entidad.Email = Session["Email"].ToString();
+            entidad.UserId = long.Parse(Session["UserId"].ToString());
+            var respValidarClave = LoginRequest(entidad2);
+
+            if (respValidarClave == null)
+            {
+                ViewBag.MsjPantalla = "La actual no coincide con su registro en la base de datos";
+                return View("ChangePassword");
+            }
+
+            if (entidad.NewPassword != entidad.ConfirmNewPassword)
+            {
+                ViewBag.MsjPantalla = "Las nueva contraseña no coincide con su confirmación";
+                return View("ChangePassword");
+            }
+
+            var respCambiarClave = model.ChangePassword(entidad);
+
+            if (respCambiarClave > 0)
+                return RedirectToAction("Index", "User");
+            else
+            {
+                ViewBag.MsjPantalla = "No se ha podido cambiar su contraseña actual";
+                return View("ChangePassword");
+            }
+
+        }
 
 
     }

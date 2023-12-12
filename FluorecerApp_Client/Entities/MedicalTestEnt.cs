@@ -22,6 +22,10 @@ namespace FluorecerApp_Client.Entities
         public string FilePath { get; set; }
 
         public DateTime Date { get; set; }
+
+        //Dropdown
+        [Display(Name = "Seleccione una evaluación")]
+        public int SelectedTestId { get; set; }
     }
 
 

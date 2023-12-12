@@ -69,15 +69,15 @@
                         <td>@item.FilePath</td>
 
                         <td>
-                            <a href="@Url.Action("DownloadTestResult", "Test", new { resultId = item.ResultId })" class="btn btn-success">
+                            <button class="btn btn-success" onclick="downloadFile('@Url.Action("DownloadTestResult", "Test", new { ResultId = item.ResultId })')">
                                 <i class="fa fa-download"></i>
-                            </a>
+                            </button>
                         </td>
                         <td>
                             <form id="deleteForm_@item.ResultId" action="@Url.Action("DeleteTestResult", "Test", new { resultId = item.ResultId })" method="post">
                                 @Html.AntiForgeryToken()
                                 <button type="submit" class="btn btn-danger" data-result-id="@item.ResultId">
-                                      <i class="fa fa-trash"></i>
+                                    <i class="fa fa-trash"></i>
                                 </button>
                             </form>
                         </td>
@@ -90,17 +90,3 @@
     </div>
 </div>
 
-<script>
-    // JavaScript para emular la solicitud DELETE
-    document.querySelectorAll('.delete-button').forEach(function (button) {
-        button.addEventListener('click', function (event) {
-            event.preventDefault();
-            var resultId = this.getAttribute('data-result-id');
-            var form = document.getElementById('deleteForm_' + resultId);
-
-            if (confirm('¿Estás seguro de que deseas eliminar esta evaluación?')) {
-                form.submit();
-            }
-        });
-    });
-</script>

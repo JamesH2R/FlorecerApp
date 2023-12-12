@@ -254,7 +254,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\test.js" />
+    <Content Include="Scripts\TestUsersDone.js" />
     <Content Include="Scripts\userAdmin.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -283,6 +283,7 @@
     <Content Include="Views\Test\TestUsers.cshtml" />
     <Content Include="Views\Test\TestUsersDone.cshtml" />
     <Content Include="Views\Appointment\GetAppointments.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

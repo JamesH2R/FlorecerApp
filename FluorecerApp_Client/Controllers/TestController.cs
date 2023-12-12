@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 using System.Reflection;
 using static System.Net.Mime.MediaTypeNames;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Configuration;
+using System.Net;
+using System.Web.UI.WebControls.WebParts;
 
 namespace FluorecerApp_Client.Controllers
 {
@@ -126,28 +130,42 @@ namespace FluorecerApp_Client.Controllers
             var resp = model.TestUsersDone();
             return View(resp);
         }
-       
+
         [HttpGet]
         public async Task<ActionResult> DownloadTestResult(long ResultId)
         {
             try
             {
-                // Llamar al método DownloadEvaluation que devuelve el archivo para descargar
-                var fileBytes = await model.DownloadTestResult(ResultId);
+                // Utilizar la instancia existente de TestModel
+                HttpResponseMessage response = await model.DownloadTestResult(ResultId);
 
-                if (fileBytes != null)
+                if (response.IsSuccessStatusCode)
                 {
-                    // Obtener el nombre del archivo según el ResultId
-                    string fileName = GetFileNameForResultId(ResultId);
+                    // Obtener el nombre del archivo desde el encabezado Content-Disposition
+                    var fileName = GetFileNameFromContentDisposition(response.Content.Headers.ContentDisposition);
 
-                    TempData["SuccessMessage"] = "Evaluación descargada con éxito.";
-                    return RedirectToAction("TestUsersDone", "Test");
+                    // Ajustar el nombre del archivo para eliminar guiones bajos adicionales al final (opcional)
+                    fileName = RemoveUnderscoresFromEnd(fileName);
+
+                    // Crear un FileStreamResult para devolver el contenido del archivo
+                    var fileStreamResult = new FileStreamResult(await response.Content.ReadAsStreamAsync(), response.Content.Headers.ContentType.MediaType)
+                    {
+                        FileDownloadName = fileName
+                    };
+
+                    return fileStreamResult;
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "El archivo no se encontró para la descarga.";
-                    return View("~/Views/Shared/Error.cshtml");
+                    // Mostrar un mensaje de error en la vista
+                    ViewBag.ErrorMessage = await response.Content.ReadAsStringAsync();
+                    return View("Error");
                 }
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                ViewBag.ErrorMessage = "Error al acceder al archivo: " + ex.Message;
+                return View("~/Views/Shared/Error.cshtml");
             }
             catch (Exception ex)
             {
@@ -156,9 +174,31 @@ namespace FluorecerApp_Client.Controllers
             }
         }
 
-        private string GetFileNameForResultId(long resultId)
+        private string GetFileNameFromContentDisposition(ContentDispositionHeaderValue contentDisposition)
         {
-            return $"{resultId}.zip";
+            if (contentDisposition != null && !string.IsNullOrEmpty(contentDisposition.FileName))
+            {
+                return contentDisposition.FileName.Trim('"');
+            }
+
+            return null;
+        }
+
+        private string RemoveUnderscoresFromEnd(string fileName)
+        {
+            // Verificar si el nombre del archivo es nulo o vacío
+            if (string.IsNullOrEmpty(fileName))
+            {
+                return fileName;
+            }
+
+            // Eliminar guiones bajos adicionales al final del nombre del archivo
+            while (fileName.EndsWith("_"))
+            {
+                fileName = fileName.Substring(0, fileName.Length - 1);
+            }
+
+            return fileName;
         }
 
         [HttpPost]
@@ -185,8 +225,6 @@ namespace FluorecerApp_Client.Controllers
         }
 
 
-
-
         //USUARIOS
 
         public async Task<ActionResult> TestUsers()
@@ -196,39 +234,73 @@ namespace FluorecerApp_Client.Controllers
                 // Obtener el UserId de la sesión
                 long userId = (long)Session["UserId"];
 
+                // Obtener las evaluaciones del usuario desde el API
+                var evaluations = await model.GetUserEvaluations(userId);
+
                 // Llamar a GetUserEvaluationNames para obtener los nombres de archivo
                 var fileNames = await model.GetUserEvaluationNames(userId);
+
+                // Configurar el ViewBag con la lista de evaluaciones para el dropdown
+                ViewBag.Evaluations = new SelectList(evaluations, "TestId", "FileName");
+
+                // Configurar el ViewBag con los nombres de archivo
                 ViewBag.FileNames = fileNames;
 
-                // Cargar la vista TestUsers.cshtml
                 return View("~/Views/Test/TestUsers.cshtml");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                ViewBag.ErrorMessage = "Error al acceder al archivo: " + ex.Message;
+                return View("~/Views/Shared/Error.cshtml");
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Ocurrió un error al intentar obtener los nombres de archivo de la evaluación: " + ex.Message;
+                ViewBag.ErrorMessage = "Ocurrió un error al intentar obtener las evaluaciones y los nombres de archivo: " + ex.Message;
                 return View("~/Views/Shared/Error.cshtml");
             }
         }
 
-
-        [HttpGet]
-        public async Task<ActionResult> DownloadEvaluation()
+        [HttpPost]
+        public async Task<ActionResult> DownloadEvaluation(long selectedTestId)
         {
             try
             {
-                // Obtener el UserId de la sesión
+                // Obtener el userId de la sesión
                 long userId = (long)Session["UserId"];
 
-                var result = await model.DownloadEvaluation(userId);
-                ViewBag.ResultMessage = result;
+                // Utilizar la instancia existente de TestModel para descargar la evaluación seleccionada
+                HttpResponseMessage response = await model.DownloadEvaluation(userId, selectedTestId);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Obtener el nombre del archivo desde el encabezado Content-Disposition
+                    var fileName = GetFileNameFromContentDisposition(response.Content.Headers.ContentDisposition);
+
+                    // Crear un FileStreamResult para devolver el contenido del archivo
+                    var fileStreamResult = new FileStreamResult(await response.Content.ReadAsStreamAsync(), response.Content.Headers.ContentType.MediaType)
+                    {
+                        FileDownloadName = fileName
+                    };
+
+                    return fileStreamResult;
+                }
+                else
+                {
+                    // Mostrar un mensaje de error en la vista
+                    ViewBag.ErrorMessage = await response.Content.ReadAsStringAsync();
+                    return View("Error");
+                }
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                ViewBag.ErrorMessage = "Error al acceder al archivo: " + ex.Message;
+                return View("~/Views/Shared/Error.cshtml");
             }
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = "Ocurrió un error al intentar descargar la evaluación: " + ex.Message;
                 return View("~/Views/Shared/Error.cshtml");
             }
-
-            return View("~/Views/Test/TestUsers.cshtml");
         }
 
 
