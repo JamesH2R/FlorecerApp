@@ -1,0 +1,99 @@
+﻿@model PagedList.IPagedList<FluorecerApp_Client.Entities.AppointmentsEnt>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "UsersAppointments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Diccionario para mapear AppointmentType a nombres en español
+    Dictionary<long, string> appointmentTypeMapping = new Dictionary<long, string>
+{
+        { 1, "Niños" },
+        { 2, "Adolescentes" },
+        { 3, "Adultos" },
+        { 5, "Adultos Mayores" }
+    };
+}
+
+<div class="row justify-content-center">
+    <div class="col-11 mx-auto">
+        <div class="text-md-left mt-3">
+            <button onclick="goBackTo('@Url.Action("Index", "User")')" style="color: #4eaac8; text-decoration: none; background: none; border: none;">
+                <i class="fas fa-arrow-left me-2"></i> Regresar
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function goBackTo(destination) {
+        window.location.href = destination;
+    }
+</script>
+
+<div class="row justify-content-center">
+    <div class="col-11 mx-auto">
+        @if (ViewBag.MsjPantalla != null)
+        {
+            <div style="text-align:center" class="alert alert-warning" role="alert">
+                @ViewBag.MsjPantalla
+            </div>
+        }
+
+        <br />
+        <h5 class="text-left ms-md-1">Citas Reservadas</h5>
+        <br />
+        @if (Model != null && Model.Any())
+        {
+            <table class="table table-hover text-center">
+                <thead>
+                    <tr>
+
+                        <th>Id del Paciente</th>
+                        <th>Fecha</th>
+                        <th>Tipo de Cita</th>
+                        <th>Acción</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var appointments in Model)
+                    {
+                        <tr>
+                            <td>@appointments.UserId</td>
+                            <td>@appointments.DateTime</td>
+                            <td>@(appointmentTypeMapping.ContainsKey(appointments.AppointmentType) ? appointmentTypeMapping[appointments.AppointmentType] : appointments.AppointmentType.ToString())</td>
+                            <td>
+                                @using (Html.BeginForm("AdminCancelAppointment", "Appointment", new { AppointmentId = appointments.AppointmentId }, FormMethod.Post))
+                                {
+                                    <input type="submit" value="Cancelar" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas cancelar esta cita?');" />
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="center-block">
+                @Html.PagedListPager(Model, page => Url.Action("AdminAppointments", new { page }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded, LinkToFirstPageFormat = "<i class='fas fa-angle-double-left'></i>", LinkToPreviousPageFormat = "<i class='fas fa-angle-left'></i>", LinkToNextPageFormat = "<i class='fas fa-angle-right'></i>", LinkToLastPageFormat = "<i class='fas fa-angle-double-right'></i>" })
+            </div>
+        }
+        else
+        {
+            <p>De momento, ningún paciente ha reservado una cita.</p>
+        }
+    </div>
+</div>
+
+<link href="~/Assets/css/Appointments.css" rel="stylesheet" />
+
+<script>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <text>alert('@TempData["SuccessMessage"]');</text>
+    }
+    else if (TempData["ErrorMessage"] != null)
+    {
+        <text>alert('@TempData["ErrorMessage"]');</text>
+    }
+</script>

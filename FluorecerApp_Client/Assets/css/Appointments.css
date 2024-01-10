@@ -1,0 +1,48 @@
+﻿/* Estilos para la tabla */
+.table thead th {
+    background-color: #1C8C4D;
+    color: white;
+}
+
+.table {
+    border: 1px solid #1C8C4D;
+}
+
+    .table thead th {
+        border: 1px solid #1C8C4D;
+    }
+
+    .table tbody td {
+        border: 1px solid darkgrey;
+    }
+
+
+/* Estilos para la paginación */
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+    .pagination li {
+        margin: 0 5px;
+    }
+
+    .pagination a,
+    .pagination span {
+        padding: 5px 10px;
+        text-decoration: none;
+        color: white;
+        background-color: #1C8C4D;
+        border: 1px solid #1C8C4D;
+        border-radius: 5px;
+    }
+
+    .pagination .active a,
+    .pagination .active span {
+        background-color: white;
+        color: #1C8C4D;
+    }
+
+
+

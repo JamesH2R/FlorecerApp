@@ -10,12 +10,12 @@ namespace FluorecerApp_Client.Entities
     {
         public long AppointmentId { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime DateTime { get; set; }
 
-        public string Hour { get; set; }
+        public long AppointmentType { get; set; }
 
-        public bool Available { get; set; }
+        public long UserId { get; set; }
 
-        public long? UserId { get; set; } 
+        public bool Status { get; set; }
     }
 }

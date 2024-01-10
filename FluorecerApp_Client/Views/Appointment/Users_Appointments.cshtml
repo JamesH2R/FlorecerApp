@@ -1,0 +1,96 @@
+﻿@model List<AppointmentsEnt>
+@using FluorecerApp_Client.Entities
+
+@{
+    ViewBag.Title = "UsersAppointments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Diccionario para mapear AppointmentType a valores correspondientes
+    Dictionary<long, string> appointmentTypeMapping = new Dictionary<long, string>
+{
+        { 1, "Niños" },
+        { 2, "Adolescentes" },
+        { 3, "Adultos" },
+        { 5, "Adultos Mayores" }
+    };
+}
+
+
+<div class="row justify-content-center">
+    <div class="col-11 mx-auto">
+        <div class="text-md-left mt-3">
+            <button onclick="goBackTo('@Url.Action("Index", "User")')" style="color: #4eaac8; text-decoration: none; background: none; border: none;">
+                <i class="fas fa-arrow-left me-2"></i> Regresar
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function goBackTo(destination) {
+        window.location.href = destination;
+    }
+</script>
+
+
+<div class="row justify-content-center">
+    <div class="col-11 mx-auto">
+        @if (ViewBag.MsjPantalla != null)
+        {
+            <div style="text-align:center" class="alert alert-warning" role="alert">
+                @ViewBag.MsjPantalla
+            </div>
+        }
+
+        <br />
+        <h5 class="text-left ms-md-1">Citas Reservadas</h5>
+        <br />
+
+        @if (Model != null && Model.Any())
+        {
+            <table class="table table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Tipo de Cita</th>
+                        <th>Acción</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var appointment in Model)
+                    {
+                        <tr>
+                            <td>@appointment.DateTime</td>
+                            <td>@(appointmentTypeMapping.ContainsKey(appointment.AppointmentType) ? appointmentTypeMapping[appointment.AppointmentType] : appointment.AppointmentType.ToString())</td>
+                            <td>
+                                @using (Html.BeginForm("CancelAppointment", "Appointment", new { AppointmentId = appointment.AppointmentId }, FormMethod.Post))
+                                {
+                                    <input type="submit" value="Cancelar" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas cancelar esta cita?');" />
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No tiene citas reservadas.</p>
+        }
+    </div>
+</div>
+
+<link href="~/Assets/css/Appointments.css" rel="stylesheet" />
+
+
+<script>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <text>alert('@TempData["SuccessMessage"]');</text>
+    }
+    else if (TempData["ErrorMessage"] != null)
+    {
+        <text>alert('@TempData["ErrorMessage"]');</text>
+    }
+</script>

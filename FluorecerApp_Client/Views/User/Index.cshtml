@@ -95,8 +95,8 @@
                                     </div>
                                     <span>Citas</span>
                                     <h4 class="mb-4">Administrar Citas</h4>
-                                    <p class="mb-5">Administre las citas de su consultorio respecto a su disponibilidad.</p>
-                                    @Html.ActionLink("Citas", "AppointmentList", "AppointmentAdmin", null, new { @class = "btn btn-main btn-round-full d-flex justify-content-center" })
+                                    <p class="mb-5">Administre las citas reservadas por los pacientes de su consultorio.</p>
+                                    @Html.ActionLink("Citas", "AdminAppointments", "Appointment", null, new { @class = "btn btn-main btn-round-full d-flex justify-content-center" })
                                 </div>
                                 <div class="feature-item mb-5 mb-lg-0">
                                     <div class="feature-icon mb-4">
@@ -127,7 +127,16 @@
                                     <span>Servicios</span>
                                     <h4 class="mb-3">Cita en línea</h4>
                                     <p class="mb-4">Obtén una cita con nosotros desde la comodidad de tu casa.</p>
-                                    @Html.ActionLink("Reservar Cita", "Index", "Appointment", null, new { @class = "btn btn-main btn-round-full d-flex justify-content-center" })
+
+
+
+                                    @Html.ActionLink("Reservar Cita", "GetAppointments", "Appointment", null, new { @class = "btn btn-main btn-round-full d-flex justify-content-center" })
+
+                                    @*@Html.ActionLink("Reservar Cita", "GetAppointments", "Appointment", new { idUsuario = ViewBag.UserId }, new { @class = "btn btn-main btn-round-full d-flex justify-content-center" })*@
+
+
+
+
                                 </div>
                                 <div class="feature-item mb-5 mb-lg-0">
                                     <div class="feature-icon mb-4">
@@ -136,7 +145,7 @@
                                     <span>Servicios</span>
                                     <h4 class="mb-3">Mis Citas</h4>
                                     <p class="mb-5">Visualiza las citas que reservaste con tu psicopedagoga.</p>
-                                    @Html.ActionLink("Mis citas", "GetAppointments", "Appointment", null, new { @class = "btn btn-main btn-round-full d-flex justify-content-center" })
+                                    @Html.ActionLink("Mis citas", "UsersAppointments", "Appointment", null, new { @class = "btn btn-main btn-round-full d-flex justify-content-center" })
                                 </div>
                                 <div class="feature-item mb-5 mb-lg-0">
                                     <div class="feature-icon mb-4">

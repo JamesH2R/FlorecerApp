@@ -1,32 +1,212 @@
-﻿@model IEnumerable<FluorecerApp_Client.Entities.AppointmentsEnt>
+﻿@model FluorecerApp_Client.Entities.AppointmentsEnt
 
 @{
     ViewBag.Title = "GetAppointments";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (Model.Any())
-{
-    <div class="row">
-        @foreach (var appointment in Model)
-        {
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Cita</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Fecha: @appointment.Date.ToString("dd-MM-yyyy")</h6>
-                        <p class="card-text">Hora: @appointment.Hour</p>
-                        @* Si deseas un enlace para cancelar la cita *@
-                        <a href="@Url.Action("CancelarCita", "Appointment", new { appointmentId = appointment.AppointmentId })" class="btn btn-danger">Cancelar cita</a>
-                    </div>
+<div class="row justify-content-center">
+    <div class="col-11 mx-auto">
+        <div class="text-md-left mt-3">
+            <button onclick="goBackTo('@Url.Action("Index", "User")')" style="color: #4eaac8; text-decoration: none; background: none; border: none;">
+                <i class="fas fa-arrow-left me-2"></i> Regresar
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function goBackTo(destination) {
+        window.location.href = destination;
+    }
+</script>
+
+
+<div class="container">
+
+    @using (Html.BeginForm("RegisterAppointment", "Appointment", FormMethod.Post, new { @class = "pt-3", @enctype = "multipart/form-data" }))
+    {
+        @ViewBag.MensajePantalla
+
+        @Html.HiddenFor(m => m.AppointmentId)
+
+        @Html.HiddenFor(model => model.UserId, new { Value = ViewBag.UserId })
+
+        <div class="row justify-content-center">
+            <div class="col-lg-4">
+                <h3>Reserva tu cita aquí mismo</h3>
+                <br />
+                <label>Selecciona el tipo de cita</label>
+                <div class="form-group">
+                    @Html.DropDownListFor(m => m.AppointmentType, ViewBag.ConsultarTipoCita as List<SelectListItem>, new { @class = "form-control form-control-lg" })
+                </div>
+
+                <br />
+                <div class="form-group">
+                    <label>Elige la fecha de la cita</label>
+                    <!-- Input para seleccionar la fecha -->
+                    <input id="DateTime" name="DateTime" type="text" class="form-control flatpickr" />
+                </div>
+                <br />
+                <div id="horarios-container" style="display: none;">
+                    <!-- Contenedor del carrusel de horarios -->
+                    <div class="owl-carousel" id="horarios-carousel"></div>
+                </div>
+
+
+                <div id="hidden-data" style="display: none;">
+                    @* Aquí puedes colocar datos adicionales que necesites para la lógica de horarios *@
                 </div>
             </div>
-        }
-    </div>
-}
-else
-{
-    <p>No hay citas disponibles.</p>
-}
+        </div>
 
+        <div class="row justify-content-center">
+            <div class="col-lg-3">
+                <button type="submit" class="btn btn-primary" style="background-color: #1C8C4D; color: white;">Reservar Cita</button>
+            </div>
+        </div>
+
+    }
+</div>
+<br />
+
+
+
+
+<div class="content-wrapper d-flex align-items-center auth px-0">
+    <!-- Resto de tu código -->
+</div>
+
+<!-- Referencias a las bibliotecas externas y script -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/rangePlugin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Flatpickr JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+<!-- Añadido para el idioma español -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/rangePlugin.js"></script>
+<!-- Owl Carousel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var owl = null; // Almacenar el carrusel como una variable global
+
+        flatpickr("#DateTime", {
+            enableTime: false,
+            dateFormat: "Y-m-d", // Formato de fecha
+            locale: "es", // Establecer el idioma a español
+            onChange: function (selectedDates, dateStr, instance) {
+                if (selectedDates.length > 0) {
+                    $("#horarios-container").show();
+                    // Filtrar horarios disponibles
+                    generarCarruselHorarios(selectedDates[0]);
+                } else {
+                    $("#horarios-container").hide();
+                }
+            }
+        });
+
+        function generarCarruselHorarios(fechaSeleccionada) {
+            $.ajax({
+                url: '/Appointment/ObtenerFechasReservadas', // Ruta para obtener fechas reservadas
+                type: 'GET',
+                success: function (fechasReservadas) {
+                    console.log("Fechas reservadas recibidas:", fechasReservadas);
+
+                    var fechasReservadasArray = [];
+                    if (Array.isArray(fechasReservadas)) {
+                        fechasReservadasArray = fechasReservadas.map(function (fecha) {
+                            return new Date(fecha); // Convertir las fechas a objetos Date
+                        });
+                    }
+
+                    var horariosDisponibles = obtenerHorariosDisponibles();
+                    var fechaISO = fechaSeleccionada.toISOString().split('T')[0]; // Obtener la fecha seleccionada en formato ISO
+
+                    var horariosFiltrados = horariosDisponibles.filter(function (horario) {
+                        var DateTime = fechaISO + 'T' + horario; // Crear la fecha/hora para comparar
+                        var DateTimeComparar = new Date(DateTime); // Convertir la fecha/hora a objeto Date
+
+                        // Verificar si la fecha/hora está presente en las fechas reservadas
+                        return !fechasReservadasArray.some(function (fechaReservada) {
+                            return fechaReservada.getTime() === DateTimeComparar.getTime(); // Comparar las fechas
+                        });
+                    });
+
+                    var carouselContent = '';
+
+                    if (horariosFiltrados.length > 0) {
+                        horariosFiltrados.forEach(function (horario) {
+                            carouselContent += '<div class="hour-item">' + horario + '</div>';
+                        });
+
+                        if (owl !== null) {
+                            owl.trigger('destroy.owl.carousel');
+                        }
+
+                        $('#horarios-carousel').html(carouselContent);
+                        owl = $('#horarios-carousel').owlCarousel({
+                            loop: true,
+                            margin: 10,
+                            responsiveClass: true,
+                            navText: ["&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Atrás <i class='fas fa-chevron-left' style='margin-right: 20px;'></i> &nbsp;", "&nbsp;&nbsp;<i class='fas fa-chevron-right' style='margin-left: 100px;'></i> Siguiente"],
+                            
+                            responsive: {
+                                0: {
+                                    items: 1,
+                                    nav: true
+                                },
+                                600: {
+                                    items: 3,
+                                    nav: false
+                                },
+                                1000: {
+                                    items: 4,
+                                    nav: true,
+                                    loop: false
+                                }
+                            }
+                            // ... configuración adicional según tu necesidad
+                        });
+
+                        $('.hour-item').on('click', function () {
+                            var selectedHour = $(this).text();
+                            var fechaCalendario = document.querySelector("#DateTime").value.split(" ")[0];
+                            var selectedDateTime = fechaCalendario + ' ' + selectedHour;
+                            document.querySelector("#DateTime").value = selectedDateTime;
+                        });
+                    } else {
+                        $('#horarios-carousel').html('No hay horarios disponibles para esta fecha.');
+                    }
+                },
+                error: function (error) {
+                    console.log('Error al obtener las fechas reservadas:', error);
+                }
+            });
+        }
+
+        function obtenerHorariosDisponibles() {
+            var horarios = [];
+            var hora = 7;
+            var minutos = 0;
+
+            while (!(hora === 17 && minutos === 0)) {
+                horarios.push(('0' + hora).slice(-2) + ':' + ('0' + minutos).slice(-2));
+                minutos += 30;
+
+                if (minutos === 60) {
+                    minutos = 0;
+                    hora++;
+                }
+            }
+
+            return horarios;
+        }
+    });
+</script>
 
