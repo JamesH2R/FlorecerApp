@@ -26,7 +26,7 @@ namespace FluorecerApp_Client.Controllers
 
         /*
 
-           private readonly string apiBaseUrl = "https://localhost:44342/";
+           private readonly string apiBaseUrl = "https://fluorecerappapi.azurewebsites.net/";
            // GET: Appointment
            public async Task<ActionResult> Index()
            {

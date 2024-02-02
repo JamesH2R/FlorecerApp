@@ -20,7 +20,7 @@ namespace FluorecerApp_Client.Controllers
         UsersModel model = new UsersModel();
 
 
-        private readonly string apiBaseUrl = "https://localhost:44342/";
+        private readonly string apiBaseUrl = "https://fluorecerappapi.azurewebsites.net/";
 
         [HttpGet]
         public ActionResult Index()

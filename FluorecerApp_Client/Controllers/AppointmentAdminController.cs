@@ -14,7 +14,7 @@ namespace FluorecerApp_Client.Controllers
     public class AppointmentAdminController : Controller
     {
 
-        private readonly string apiBaseUrl = "https://localhost:44342/";
+        private readonly string apiBaseUrl = "https://fluorecerappapi.azurewebsites.net/";
         // GET: AppointmentAdmin
         public async Task<ActionResult> AppointmentList()
         {
