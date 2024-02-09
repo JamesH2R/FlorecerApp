@@ -254,7 +254,7 @@ namespace FluorecerApp_Client.Models
                 using (var client = new HttpClient())
                 {
                     // URL del API para descargar la evaluación
-                    string url = ConfigurationManager.AppSettings["urlApi"].ToString() + $"api/DownloadEvaluation/{userId}/{selectedTestId}";
+                    string url = ConfigurationManager.AppSettings["urlApi"].ToString() + $"api/DownloadEvaluation?userId={userId}&selectedTestId={selectedTestId}";
 
                     // Realizar la llamada a la API y manejar la respuesta
                     HttpResponseMessage response = await client.PostAsync(url, null);
