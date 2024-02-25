@@ -100,6 +100,7 @@
             enableTime: false,
             dateFormat: "Y-m-d", // Formato de fecha
             locale: "es", // Establecer el idioma a español
+            minDate: "today", // Establecer la fecha mínima como la fecha actual
             onChange: function (selectedDates, dateStr, instance) {
                 if (selectedDates.length > 0) {
                     $("#horarios-container").show();
