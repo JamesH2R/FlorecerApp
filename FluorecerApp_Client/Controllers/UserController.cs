@@ -229,6 +229,13 @@ namespace FluorecerApp_Client.Controllers
 
             if (resp == 1)
             {
+                // Actualiza los datos de sesión con la nueva información del usuario
+                Session["NameLastName"] = entidad.LastName;
+                Session["Email"] = entidad.Email;
+                Session["Name"] = entidad.Name;
+                Session["Phone"] = entidad.Phone;
+                Session["Address"] = entidad.Address;
+
                 return RedirectToAction("Index", "User");
             }
             else if (resp == 2)
