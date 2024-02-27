@@ -20,9 +20,12 @@ namespace FluorecerApp_Client.Entities
         [EmailAddress(ErrorMessage = "Por favor, ingresa una dirección de correo electrónico válida.")]
         public string Email { get; set; }
 
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).*$", ErrorMessage = "La contraseña debe contener al menos 1 mayúscula, 1 número y 1 carácter especial.")]
+        [MinLength(8, ErrorMessage = "La contraseña debe contener al menos 8 caracteres.")]
         [Required(ErrorMessage = "El campo contraseña es obligatorio.")]
         public string Password { get; set; }
 
+        [RegularExpression("^[0-9]{8}$", ErrorMessage = "El número de telefono debe ser de 8 números")]
         [Required(ErrorMessage = "El campo celular es obligatorio.")]
         public string Phone { get; set; }
 

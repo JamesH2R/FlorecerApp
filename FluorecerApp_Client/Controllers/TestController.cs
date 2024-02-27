@@ -97,30 +97,38 @@ namespace FluorecerApp_Client.Controllers
             {
                 var selectedUserId = test.UserId;
 
-                var selectedUser = await model.GetUserById(selectedUserId);
-                if (selectedUser != null)
+                var user = await model.GetUserById(selectedUserId);
+                if (user != null)
                 {
-                    // Asignar el UserId y LastName al objeto MedicalTestsEnt
-                    test.UserId = selectedUser.UserId;
-                    test.LastName = selectedUser.LastName;
+                    test.UserId = user.UserId;
+                    test.LastName = user.LastName;
+
+                    var result = await model.DeleteEvaluations(test.UserId);
+
+                    if (result != null)
+                    {
+                        TempData["ResultMessage"] = "Evaluación eliminada con éxito";
+                    } else
+                    {
+                        TempData["ErrorMessage"] = "El usuario no tiene evaluaciones pendientes";
+                    }
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "No se ha seleccionado un paciente";
                 }
 
-
-                var result = await model.DeleteEvaluations(test.UserId);
-                ViewBag.ResultMessage = result;
-
-                // Establecer un indicador en TempData para indicar que se ejecutó un POST antes de este método
+                // Indicar que se ejecutó un POST antes de este método
                 TempData["PostEjecutado"] = true;
+
+                return RedirectToAction("Assign", "Test");
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Ocurrió un error al intentar eliminar la evaluación: " + ex.Message;
+
+                TempData["ErrorMessage"] = "Ocurrió un error al intentar eliminar la evaluación.";
                 return View("~/Views/Shared/Error.cshtml");
             }
-
-            ViewBag.ResultMessage = "Evaluación eliminada con éxito"; TempData["ResultMessage"] = ViewBag.ResultMessage; // Guardar en TempData
-            // Redireccionar al método GET "Assign" del controlador "Test"
-            return RedirectToAction("Assign", "Test");
         }
 
         [HttpGet]
@@ -261,15 +269,21 @@ namespace FluorecerApp_Client.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> DownloadEvaluation(long selectedTestId)
+        public async Task<ActionResult> DownloadEvaluation(long? selectedTestId)
         {
             try
             {
-                // Obtener el userId de la sesión
+                if (!selectedTestId.HasValue)
+                {
+
+                    TempData["ErrorMessage"] = "No se ha elegido una evaluación";
+                    return RedirectToAction("TestUsers");
+                }
+
                 long userId = (long)Session["UserId"];
 
                 // Utilizar la instancia existente de TestModel para descargar la evaluación seleccionada
-                HttpResponseMessage response = await model.DownloadEvaluation(userId, selectedTestId);
+                HttpResponseMessage response = await model.DownloadEvaluation(userId, selectedTestId.Value);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -282,19 +296,14 @@ namespace FluorecerApp_Client.Controllers
                         FileDownloadName = fileName
                     };
 
+                    TempData.Clear(); 
                     return fileStreamResult;
                 }
                 else
                 {
-                    // Mostrar un mensaje de error en la vista
-                    ViewBag.ErrorMessage = await response.Content.ReadAsStringAsync();
-                    return View("Error");
+                    ViewBag.ErrorMessage = await response.Content.ReadAsStringAsync(); 
+                    return View();
                 }
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                ViewBag.ErrorMessage = "Error al acceder al archivo: " + ex.Message;
-                return View("~/Views/Shared/Error.cshtml");
             }
             catch (Exception ex)
             {
@@ -302,6 +311,8 @@ namespace FluorecerApp_Client.Controllers
                 return View("~/Views/Shared/Error.cshtml");
             }
         }
+
+
 
 
         [HttpGet]

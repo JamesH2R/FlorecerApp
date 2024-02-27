@@ -24,17 +24,17 @@
 <div class="col-lg-12">
     <div class="feature-block d-lg-flex justify-content-center">
 
-        @if (!string.IsNullOrEmpty(ViewBag.ResultMessage))
+        @if (!string.IsNullOrEmpty(TempData["ResultMessage"] as string))
         {
             <div class="alert alert-success" role="alert">
-                @ViewBag.ResultMessage
+                @TempData["ResultMessage"]
             </div>
         }
 
-        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        @if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
         {
             <div class="alert alert-danger" role="alert">
-                @ViewBag.ErrorMessage
+                @TempData["ErrorMessage"]
             </div>
         }
 

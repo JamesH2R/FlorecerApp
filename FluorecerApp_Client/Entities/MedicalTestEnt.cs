@@ -11,6 +11,7 @@ namespace FluorecerApp_Client.Entities
         public long TestId { get; set; }
         [Required(ErrorMessage = "Campo obligatorio.")]
         public long UserId { get; set; }
+        [Required(ErrorMessage = "Por favor seleccione un paciente")]
         public string Name { get; set; }
         public string LastName { get; set; }
         public long RoleId { get; set; }
@@ -25,7 +26,8 @@ namespace FluorecerApp_Client.Entities
 
         //Dropdown
         [Display(Name = "Seleccione una evaluación")]
-        public int SelectedTestId { get; set; }
+        [Required(ErrorMessage = "Por favor seleccione una evaluacion")]
+        public int? SelectedTestId { get; set; }
     }
 
 

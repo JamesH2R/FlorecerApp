@@ -150,7 +150,7 @@ namespace FluorecerApp_Client.Models
             using (var client = new HttpClient())
             {
                 string url = ConfigurationManager.AppSettings["urlApi"].ToString() + "api/RecoverKey";
-                JsonContent body = JsonContent.Create(entidad); //Serializar
+                JsonContent body = JsonContent.Create(entidad);
                 HttpResponseMessage resp = client.PostAsync(url, body).Result;
 
                 if (resp.IsSuccessStatusCode)

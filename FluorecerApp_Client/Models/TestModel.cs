@@ -132,7 +132,7 @@ namespace FluorecerApp_Client.Models
                     }
                     else
                     {
-                        return "No se pudo eliminar las evaluaciones.";
+                        return null;
                     }
                 }
                 catch (Exception ex)

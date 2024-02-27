@@ -20,7 +20,7 @@ namespace FluorecerApp_Client.Controllers
         UsersModel model = new UsersModel();
 
 
-        private readonly string apiBaseUrl = "https://fluorecerappapi.azurewebsites.net/";
+        private readonly string apiBaseUrl = "https://localhost:44342/";
 
         [HttpGet]
         public ActionResult Index()
@@ -97,8 +97,9 @@ namespace FluorecerApp_Client.Controllers
                     }
                     else
                     {
-                        if (response.StatusCode == HttpStatusCode.Unauthorized)
+                        if (response.StatusCode == HttpStatusCode.PreconditionFailed)
                         {
+                            Console.WriteLine("Error al iniciar sesión. Código de estado: " + response?.StatusCode);
                             TempData["ErrorMessage"] = "El usuario está inactivo. Por favor, contacta al administrador.";
                         } else
                         {
@@ -271,8 +272,8 @@ namespace FluorecerApp_Client.Controllers
                 return RedirectToAction("Login", "User");
             else
             {
-                ViewBag.MsjPantalla = "No se ha podido recuperar su acceso";
-                return View("Recovery");
+                ViewBag.MsjPantalla = "Ingresa un correo registrado";
+                return View();
             }
 
         }
@@ -293,7 +294,7 @@ namespace FluorecerApp_Client.Controllers
 
             if (respValidarClave == null)
             {
-                ViewBag.MsjPantalla = "La actual no coincide con su registro en la base de datos";
+                ViewBag.MsjPantalla = "La contraseña actual no coincide con su registro en la base de datos";
                 return View("ChangePassword");
             }
 

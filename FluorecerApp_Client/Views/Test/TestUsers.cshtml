@@ -80,6 +80,15 @@
                                         <button type="submit" class="btn btn-primary" style="background-color: #3D3372; color: white;">Descargar Evaluación</button>
                                     }
 
+
+                                    if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+                                    {
+                                        <p class="alert alert-danger mt-1" role="alert">
+                                            @TempData["ErrorMessage"]
+                                        </p>
+                                    }
+
+
                                 }
                                 else
                                 {
