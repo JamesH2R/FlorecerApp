@@ -334,6 +334,10 @@ namespace FluorecerApp_Client.Controllers
             {
                 var result = await model.SendResult(file);
                 ViewBag.ResultMessage = result;
+
+                // Establecer un indicador en TempData para indicar que se ejecutó un POST antes de este método
+                TempData["PostEjecutado"] = true;
+
             }
             catch (Exception ex)
             {
@@ -341,8 +345,13 @@ namespace FluorecerApp_Client.Controllers
                 return View("~/Views/Shared/Error.cshtml");
             }
 
-            return View("~/Views/Test/SendTest.cshtml");
+            ViewBag.ResultMessage = "Resultado enviado con éxito";
+            TempData["ResultMessage"] = ViewBag.ResultMessage; // Guardar en TempData
 
+            // Limpiar TempData después de usarlo
+            TempData.Clear();
+
+            return View("~/Views/Test/SendTest.cshtml");
         }
 
         [HttpGet]
