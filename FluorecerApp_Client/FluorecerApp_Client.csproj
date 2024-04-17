@@ -209,6 +209,8 @@
     <Content Include="Assets\css\UsersAdmin.css" />
     <Content Include="Assets\img\bg.jpg" />
     <Content Include="Assets\img\contact.jpg" />
+    <Content Include="Assets\img\florecer2.jpg" />
+    <Content Include="Assets\img\florecer5.jpg" />
     <Content Include="Assets\img\kid.jpg" />
     <Content Include="Assets\img\kid2.jpg" />
     <Content Include="Assets\img\logo.png" />
